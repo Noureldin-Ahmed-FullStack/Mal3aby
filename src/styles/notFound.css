@@ -1,0 +1,90 @@
+.background-text {
+  -webkit-text-stroke: 6px #181818;
+  font-size: 30vw;
+  overflow: hidden;
+  font-weight: bold;
+  background: url('https://ssniper.sirv.com/Images/other%20projects/paint.jpg') no-repeat center center;
+  background-size: 60vw;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  line-height: 1;
+  vertical-align: middle;
+  transition: all 0.6s;
+}
+
+.background-text-dark {
+  -webkit-text-stroke: 6px #f0f0f0;
+  font-size: 30vw;
+  overflow: hidden;
+  font-weight: bold;
+  background: url('https://ssniper.sirv.com/Images/other%20projects/purple.jpg') no-repeat center center;
+  background-size: 60vw;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  line-height: 1;
+  vertical-align: middle;
+  transition: all 0.6s;
+}
+
+.backGroundGradient {
+
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, rgb(6 78 59));
+  background-size: 400% 400%;
+  animation: gradient 3s ease infinite;
+  transition: all .2s ease-in-out;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.UnderConstructionWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, #ffffff 50%, #007bff 50%);
+  position: relative;
+}
+
+.UnderConstructionContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+
+.curved-bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background-color: #007bff;
+  /* Blue side background */
+  clip-path: ellipse(50% 180% at 100% 0);
+  /* Creates the curve */
+}
+
+.UnderConstructionContent {
+  position: relative;
+  z-index: 2;
+  padding: 2rem;
+}
+.maxWidth80vw {
+  width: 100%;
+  min-width: 340px;
+  max-width: 50vw;
+}
