@@ -31,11 +31,11 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <HomePage /> },
       { path: "/home", element: <HomePage /> },
-      { path: "/continental", element: <HomePage /> },
+      { path: "/Mal3aby", element: <HomePage /> },
       { path: "/managment", element: <CenteredPage><Managment /></CenteredPage> },
       { path: "/Social", element: <SocialPage /> },
-      { path: "/sign-in", element: <CenteredPage className="mt-20"><SignUp routing='hash' forceRedirectUrl={'/continental'} /></CenteredPage> },
-      { path: "/sign-up", element: <CenteredPage className="mt-20"><SignIn routing='hash' forceRedirectUrl={'/continental'} /></CenteredPage> },
+      { path: "/sign-in", element: <CenteredPage className="mt-20"><SignUp routing='hash' forceRedirectUrl={'/Mal3aby'} /></CenteredPage> },
+      { path: "/sign-up", element: <CenteredPage className="mt-20"><SignIn routing='hash' forceRedirectUrl={'/Mal3aby'} /></CenteredPage> },
       { path: "*", element: <CenteredPage><NotFoundPage /></CenteredPage> },
     ]
   }
