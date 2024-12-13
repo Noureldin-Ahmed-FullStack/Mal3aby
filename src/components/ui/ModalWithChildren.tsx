@@ -3,6 +3,7 @@ import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/
 
 interface CustomDialogProps {
     open: boolean;
+    isDisabled?: boolean;
     onClose: () => void;
     onConfirm?: () => void;
     title?: string;
@@ -17,6 +18,7 @@ const CustomDialog: React.FC<CustomDialogProps> = ({
     onClose,
     onConfirm,
     title,
+    isDisabled= false,
     confirmColor = "primary",
     children,
     confirmText = 'Confirm',
@@ -25,7 +27,7 @@ const CustomDialog: React.FC<CustomDialogProps> = ({
     return (
         <Dialog
             PaperProps={{
-                className: '!bg-slate-50 dark:!bg-slate-800 dark:!text-slate-50',
+                className:'!bg-slate-50 dark:!bg-slate-800 !text-slate-800 dark:!text-slate-50',
             }}
             open={open} onClose={onClose} fullWidth maxWidth="sm">
             {title && <DialogTitle>{title}</DialogTitle>}
@@ -35,7 +37,7 @@ const CustomDialog: React.FC<CustomDialogProps> = ({
                     {cancelText}
                 </Button>
                 {onConfirm && (
-                    <Button onClick={onConfirm} variant='contained' color={confirmColor}>
+                    <Button disabled={isDisabled} onClick={onConfirm} variant='contained' color={confirmColor}>
                         {confirmText}
                     </Button>
                 )}

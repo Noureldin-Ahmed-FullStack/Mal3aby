@@ -1,9 +1,12 @@
 
 import { create } from "zustand";
 interface userType {
-  userName: string,
+  name: string,
   _id: string,
   userPFP: string,
+  email: string,
+  About?: string
+  role: string
 }
 interface userState {
   userData: userType | null;

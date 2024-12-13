@@ -59,8 +59,8 @@ const FileUpload: React.FC<FileUploadProps> = ({ onChange }) => {
   const fileThumbnails = useMemo(() => {
     return files.map((file, index) => (
       <div className="relative w-full" key={index}>
-        <div className='relative w-full h-40 flex overflow-hidden m-0 justify-center items-center rounded-lg bg-zinc-300 dark:bg-zinc-800'>
-          {index === 0 && <p className='absolute font-bold bg-zinc-900 w-full text-center top-0 stroke-black stroke-2'>Thumbnail</p>}
+        <div className='relative w-full h-40 flex overflow-hidden m-0 justify-center items-center rounded-lg bg-opacity-35 dark:bg-opacity-65 bg-zinc-300 dark:bg-zinc-800 dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:border-white/[0.2] border-black/[0.1] border  '>
+          {index === 0 && <p className='absolute font-bold bg-zinc-900 w-full text-center top-0 stroke-black stroke-2'>Cover Image</p>}
           <img src={URL.createObjectURL(file)} className='w-full' alt={file.name} />
         </div>
 
@@ -89,9 +89,9 @@ const FileUpload: React.FC<FileUploadProps> = ({ onChange }) => {
       >
         <input {...getInputProps()} type="file" capture="environment" accept="image/*" />
         {isDragActive ? (
-          <p className="text-gray-600">Drop Images here...</p>
+          <p className="text-gray-700 dark:text-gray-300">Drop Images here...</p>
         ) : (
-          <p className="text-gray-600">🖼 Drag & drop some Images here, or click to select Images</p>
+          <p className="text-gray-700 dark:text-gray-300">🖼 Drag & drop some Images here, or click/tap to select Images</p>
         )}
       </div>
 
@@ -110,7 +110,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onChange }) => {
               }}
             >
               <MenuItem className="!flex !justify-start hover:!bg-zinc-700" onClick={() => MakeThumbnail(selectedFileIndex)}>
-                <ImageIcon color="info" /> <p className="ps-2">Make Thumbnail</p>
+                <ImageIcon color="info" /> <p className="ps-2">Make Cover Image</p>
               </MenuItem>
               <Divider sx={{ borderBottomWidth: 1, opacity: '0.2', bgcolor: 'white' }} />
               <MenuItem className="!flex !justify-start hover:!bg-zinc-700" onClick={() => handleRemove(selectedFileIndex)}>

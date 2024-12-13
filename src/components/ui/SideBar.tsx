@@ -2,19 +2,24 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import DensityMediumOutlinedIcon from '@mui/icons-material/DensityMediumOutlined';
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
+import DarkModeIcon from '@mui/icons-material/DarkMode';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import PersonIcon from '@mui/icons-material/Person';
+import SupportAgentIcon from '@mui/icons-material/SupportAgent';
+import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import { BottomNavigationAction } from '@mui/material';
+import { useThemeStore } from '../../context/ThemeContext';
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
 export default function SideBar() {
+    const { theme,ToggleTheme } = useThemeStore();
     const [state, setState] = React.useState({
         top: false,
         left: false,
@@ -45,29 +50,41 @@ export default function SideBar() {
             onKeyDown={toggleDrawer(anchor, false)}
         >
             <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
+                    <ListItem disablePadding>
                         <ListItemButton>
                             <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                                <PersonIcon />
                             </ListItemIcon>
-                            <ListItemText primary={text} />
+                            <ListItemText primary={"profile"} />
                         </ListItemButton>
                     </ListItem>
-                ))}
+                    <ListItem disablePadding>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <SupportAgentIcon />
+                            </ListItemIcon>
+                            <ListItemText primary={"customer service"} />
+                        </ListItemButton>
+                    </ListItem>
+                    <ListItem disablePadding>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <EditCalendarIcon />
+                            </ListItemIcon>
+                            <ListItemText primary={"bookings"} />
+                        </ListItemButton>
+                    </ListItem>
             </List>
             <Divider />
             <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton>
+                    <ListItem disablePadding>
+                        <ListItemButton onClick={ToggleTheme}>
                             <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                                {theme == "light"? <WbSunnyIcon /> : <DarkModeIcon />}
                             </ListItemIcon>
-                            <ListItemText primary={text} />
+                            <ListItemText primary={"Change theme"} />
                         </ListItemButton>
                     </ListItem>
-                ))}
             </List>
         </Box>
     );

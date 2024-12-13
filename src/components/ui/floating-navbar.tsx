@@ -1,5 +1,4 @@
-"use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 // import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
@@ -11,9 +10,10 @@ import {
 } from "framer-motion";
 import { cn } from "../../lib/utils/cn";
 import { useThemeStore } from "../../context/ThemeContext";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Checkbox } from "@mui/material";
 import { UserButton, useUser } from "@clerk/clerk-react";
+import { useAppContext } from "../../context/AppContext";
 
 export const FloatingNav = ({
   navItems,
@@ -49,16 +49,17 @@ export const FloatingNav = ({
 
   const { isSignedIn, isLoaded } = useUser(); // Clerk's hook
   const { ToggleTheme, theme } = useThemeStore();
+  const {currentPath} = useAppContext();
   const navigate = useNavigate();
   const goTo = (path: String) => {
     navigate('/' + path);
   }
-  const location = useLocation();
-  const [currentPath, setCurrentPath] = useState(location.pathname);
+  // const location = useLocation();
+  // const [currentPath, setCurrentPath] = useState(location.pathname);
 
-  useEffect(() => {
-    setCurrentPath(location.pathname);
-  }, [location]);
+  // useEffect(() => {
+  //   setCurrentPath(location.pathname);
+  // }, [location]);
   return (
     <AnimatePresence mode="wait">
       <motion.div
@@ -106,9 +107,9 @@ export const FloatingNav = ({
             checked={theme == 'dark'}
             icon={<WbSunnyIcon
               sx={{
-                stroke: 'black',
+                stroke: 'white',
                 strokeWidth: 0.1, // Adjust thickness here
-              }} className="text-zinc-200 dark:text-white  h-5" />}
+              }} className="text-zinc-700 dark:text-black  h-5" />}
             checkedIcon={<DarkModeIcon sx={{
               stroke: 'black',
               strokeWidth: 0.1, // Adjust thickness here

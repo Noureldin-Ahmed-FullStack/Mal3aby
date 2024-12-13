@@ -15,6 +15,14 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.agu-display {
+  font-family: "Agu Display", serif !important;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "MORF" 0;
+}
 .FloatingIcon{
   height:1rem;
   width:1rem;
@@ -79,3 +87,4 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+

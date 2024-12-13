@@ -133,7 +133,7 @@ export function SinglePost(props: SocialPost) {
         <p>Are you sure you want to Delete this post?</p>
       </CustomDialog>
       <CommentsModal postData={SelectedPost} open={CommentOpen} handleClose={handleCommentClose} />
-      <div className=" w-full relative maxWidth80vw">
+      <div className=" w-full relative maxWidth50vw">
         <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-blue-500 to-teal-500 transform scale-[0.80] rounded-full blur-3xl" />
         <div className="relative shadow-xl myLightPost dark:bg-gray-900 border border-gray-800 dark:text-gray-300 text-slate-700 pb-0 p-4 pt-4 h-full overflow-hidden rounded-2xl flex flex-col justify-end items-start">
           <div className="flex justify-between mb-2 w-full">

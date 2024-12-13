@@ -18,6 +18,9 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import SocialPage from './components/Pages/SocialPage.tsx'
 import 'react-toastify/dist/ReactToastify.css';
 import Managment from './components/Pages/Managment.tsx'
+import ProfilePage from './components/Pages/ProfilePage.tsx'
+import FieldsPage from './components/FieldsPage.tsx'
+import { BeamsHero } from './components/BreamsHero.tsx'
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
 
@@ -32,6 +35,12 @@ const router = createBrowserRouter([
       { path: "/", element: <HomePage /> },
       { path: "/home", element: <HomePage /> },
       { path: "/Mal3aby", element: <HomePage /> },
+      { path: "/soccer", element: <FieldsPage /> },
+      { path: "/paddle", element: <FieldsPage /> },
+      { path: "/pool-billiard", element: <FieldsPage /> },
+      { path: "/swimming-pool", element: <FieldsPage /> },
+      { path: "/news", element: <BeamsHero /> },
+      { path: "/Profile", element: <CenteredPage><ProfilePage /></CenteredPage> },
       { path: "/managment", element: <CenteredPage><Managment /></CenteredPage> },
       { path: "/Social", element: <SocialPage /> },
       { path: "/sign-in", element: <CenteredPage className="mt-20"><SignUp routing='hash' forceRedirectUrl={'/Mal3aby'} /></CenteredPage> },

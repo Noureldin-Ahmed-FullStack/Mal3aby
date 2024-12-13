@@ -36,7 +36,7 @@ export default function SocialPage() {
   return (
     <div className="!bg-fixed dark:bg-gradient-to-t dark:from-cyan-900 dark:via-green-700 dark:to-teal-900 bg-gradient-to-tr from-stone-300 from-0% via-amber-100 to-emerald-100 relative grow">
       <div className="mt-28 flex justify-center ">
-        <div className="flex flex-col maxWidth80vw">
+        <div className="flex flex-col maxWidth50vw">
           {userData?._id ? <AddPost /> : <>{userData?._id}</>}
           {isLoading ? (
             <div className="w-full flex justify-center items-center mt-32">
