@@ -25,7 +25,7 @@ export default function ProfilePage() {
           <Item>{userData?._id}</Item>
         </Grid>
       </Grid>
-      <AddFieldButton />
+      {userData?.role == "admin" && <AddFieldButton />}
     </div>
   )
 }

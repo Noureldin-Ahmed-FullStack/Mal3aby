@@ -15,16 +15,16 @@ const getPathIndex = (path: string | null) => {
             return 0
         case "/Mal3aby":
             return 0
-        case "/home":
-            return 0
-        case "/home":
-            return 0
+        case "/tournament":
+            return 1
+        case "/favourites":
+            return 2
         default:
             return -1
     }
 }
 export default function TabLayout() {
-    const {currentPath} = useAppContext();
+    const { currentPath } = useAppContext();
 
     return (
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>

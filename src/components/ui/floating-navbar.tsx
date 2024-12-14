@@ -60,6 +60,23 @@ export const FloatingNav = ({
   // useEffect(() => {
   //   setCurrentPath(location.pathname);
   // }, [location]);
+const getPathIndex = (path: string | null) => {
+  switch (path) {
+      case "":
+          return "/home"
+      case "home":
+          return "/home"
+      case "social":
+          return "/social"
+      case "News":
+          return "/News"
+      case "Profile":
+          return "/Profile"
+      default:
+          return -1
+  }
+}
+
   return (
     <AnimatePresence mode="wait">
       <motion.div
@@ -87,7 +104,7 @@ export const FloatingNav = ({
               key={`link=${idx}`}
               to={navItem.link}
               className={cn(
-                "relative dark:text-neutral-50 hover:border-b-2 border-gray-500 navLinks items-center font-bold flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500", currentPath == "/" + navItem.link ? "navOutline border-b-emerald-700 dark:border-b-blue-700" : ""
+                "relative dark:text-neutral-50 hover:border-b-2 border-gray-500 navLinks items-center font-bold flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500", (currentPath == (getPathIndex(navItem.link))) ? "navOutline border-b-emerald-700 dark:border-b-blue-700" : ""
               )}
             >
               <span className="block sm:hidden">{navItem.icon}</span>

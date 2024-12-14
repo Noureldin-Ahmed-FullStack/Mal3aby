@@ -1,5 +1,6 @@
 
 import { create } from "zustand";
+import { response } from "../types";
 interface userType {
   name: string,
   _id: string,
@@ -16,4 +17,20 @@ interface userState {
 export const useUserContext = create<userState>((set) => ({
   userData: null,
   setUserData: (userData) => set({ userData: userData }),
+}));
+
+
+
+interface UserFavsState {
+  favsList: response[]; 
+  setfavsList: (favsList: response[]) => void;
+  favsLoading: boolean; 
+  setfavsLoading: (favsLoading: boolean) => void;
+}
+
+export const useUserFavsContext = create<UserFavsState>((set) => ({
+  favsList: [], 
+  setfavsList: (favsList) => set({ favsList }),
+  favsLoading: true,
+  setfavsLoading: (favsLoading) => set({ favsLoading }),
 }));

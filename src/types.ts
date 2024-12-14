@@ -19,3 +19,16 @@ export interface Comments{
     createdBy:UserData
     createdAt:string
 }
+export interface response {
+    Images: [string]
+    tags: [string]
+    createdAt: string
+    location: string
+    coverImage: string
+    note: string
+    price: string
+    ownedBy: string
+    type: string
+    title: string
+    _id: string
+};
