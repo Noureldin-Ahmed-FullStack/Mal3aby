@@ -22,6 +22,7 @@ import ProfilePage from './components/Pages/ProfilePage.tsx'
 import FieldsPage from './components/FieldsPage.tsx'
 import { BeamsHero } from './components/BreamsHero.tsx'
 import Favouritespage from './components/Pages/Favouritespage.tsx'
+import FieldDetailsPage from './components/Pages/FieldDetailsPage.tsx'
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
 
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
       { path: "/", element: <HomePage /> },
       { path: "/home", element: <HomePage /> },
       { path: "/Mal3aby", element: <HomePage /> },
+      { path: "/field/:fieldID", element: <FieldDetailsPage /> },
       { path: "/soccer", element: <FieldsPage /> },
       { path: "/paddle", element: <FieldsPage /> },
       { path: "/favourites", element: <Favouritespage /> },

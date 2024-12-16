@@ -180,7 +180,7 @@ export default function AddFieldButton() {
 
 
                     <div className="mt-5">
-                        <FileUpload onChange={handleFileChange} />
+                        <FileUpload onChange={handleFileChange}/>
                     </div>
                 </form>
                 <div className='bg-zinc-100 dark:bg-zinc-800 dark:bg-opacity-20 p-3 rounded'>

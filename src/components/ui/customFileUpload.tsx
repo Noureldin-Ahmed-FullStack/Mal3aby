@@ -38,6 +38,8 @@ const FileUpload: React.FC<FileUploadProps> = ({ onChange }) => {
       const newFiles = [...prevFiles];
       const [fileToMove] = newFiles.splice(idxToMove, 1); // Remove the item from its current position
       newFiles.unshift(fileToMove); // Move it to the beginning of the array
+      console.log(newFiles);
+      onChange && onChange(newFiles)
       return newFiles;
     });
     handleClose();
@@ -49,7 +51,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onChange }) => {
       onChange(newFiles);
     }
   }, [onChange]);
-
+  
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: handleFileChange,
     multiple: true, // Set to true if you want to allow multiple files

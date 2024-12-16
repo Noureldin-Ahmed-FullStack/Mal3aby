@@ -29,23 +29,37 @@ export const useFavs = (user_ID: string | undefined) => {
         refetchOnWindowFocus: false,
     });
 }
-// const fetchFieldDetails = async (FieldId: string) => {
-//     try {
-//         const response = await axios.get(`${BaseURL}lookup.php?i=${FieldId}`);
-//         console.log(response.data);
+const fetchFieldDetails = async (fieldID: string | undefined) => {
+    if (fieldID != null || fieldID != undefined) {
+        try {
+            const response = await axios.get(BaseURL + "fieldDetails/" + fieldID);
+            console.log(response.data);
 
-//         return response.data;
-//     } catch (error) {
-//         console.error(error);
-//         return null
-//     }
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            return null
+        }
+    } else {
+        return null
+    }
 
-// };
+
+};
 export const useField = (fieldType: string) => {
     return useQuery({
         queryKey: ['Field' + fieldType, fieldType],
         queryFn: () => fetchField(fieldType),
         enabled: !!fieldType,
+        staleTime: 5 * 60 * 1000,
+        refetchOnWindowFocus: false,
+    });
+}
+export const useFieldDetails = (fieldID: string | undefined) => {
+    return useQuery({
+        queryKey: ['FieldDetails' + fieldID, fieldID],
+        queryFn: () => fetchFieldDetails(fieldID),
+        enabled: !!fieldID,
         staleTime: 5 * 60 * 1000,
         refetchOnWindowFocus: false,
     });

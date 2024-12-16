@@ -28,12 +28,12 @@ export default function FieldsPage() {
                 <>
                     <div className="static md:hidden maxWidth75vw">
                         {favsList?.map((item: response) => (
-                            <FieldItem _id={item._id} key={item._id} type={item.type} className="my-2" Name={item.title} Icon={item.coverImage} location={item.location} price={item.price} />
+                            <FieldItem _id={item._id} key={item._id} type={item.type} address={item.address}  className="my-2" Name={item.title} Icon={item.coverImage} location={item.location} price={item.price} />
                         ))}
                     </div>
                     <div className="hidden md:grid md:grid-cols-2 xl:grid-cols-3 gap-4 mt-24 maxWidth75vw">
                         {favsList?.map((item: response) => (
-                            <FieldItemBox _id={item._id} key={item._id} type={item.type} className="my-2" Name={item.title} Icon={item.coverImage} location={item.location} price={item.price} />
+                            <FieldItemBox _id={item._id} key={item._id} type={item.type} address={item.address}  className="my-2" Name={item.title} Icon={item.coverImage} location={item.location} price={item.price} />
                         ))}
                     </div>
                 </>) : (

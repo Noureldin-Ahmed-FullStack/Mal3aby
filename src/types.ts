@@ -24,6 +24,7 @@ export interface response {
     tags: [string]
     createdAt: string
     location: string
+    address: string
     coverImage: string
     note: string
     price: string

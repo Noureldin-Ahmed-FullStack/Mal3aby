@@ -6,6 +6,7 @@ import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
+import NewspaperIcon from '@mui/icons-material/Newspaper';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
@@ -15,6 +16,7 @@ import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import { BottomNavigationAction } from '@mui/material';
 import { useThemeStore } from '../../context/ThemeContext';
+import { Link } from 'react-router-dom';
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
@@ -50,7 +52,7 @@ export default function SideBar() {
             onKeyDown={toggleDrawer(anchor, false)}
         >
             <List>
-                    <ListItem disablePadding>
+                    <ListItem className='text-inherit' component={Link} to="profile" disablePadding>
                         <ListItemButton>
                             <ListItemIcon>
                                 <PersonIcon />
@@ -58,7 +60,7 @@ export default function SideBar() {
                             <ListItemText primary={"profile"} />
                         </ListItemButton>
                     </ListItem>
-                    <ListItem disablePadding>
+                    <ListItem className='text-inherit' component={Link} to="customer-service" disablePadding>
                         <ListItemButton>
                             <ListItemIcon>
                                 <SupportAgentIcon />
@@ -66,12 +68,20 @@ export default function SideBar() {
                             <ListItemText primary={"customer service"} />
                         </ListItemButton>
                     </ListItem>
-                    <ListItem disablePadding>
+                    <ListItem className='text-inherit' component={Link} to="bookings" disablePadding>
                         <ListItemButton>
                             <ListItemIcon>
                                 <EditCalendarIcon />
                             </ListItemIcon>
                             <ListItemText primary={"bookings"} />
+                        </ListItemButton>
+                    </ListItem>
+                    <ListItem className='text-inherit' component={Link} to="social" disablePadding>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <NewspaperIcon />
+                            </ListItemIcon>
+                            <ListItemText primary={"social"} />
                         </ListItemButton>
                     </ListItem>
             </List>
