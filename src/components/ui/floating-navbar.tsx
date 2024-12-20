@@ -70,6 +70,8 @@ const getPathIndex = (path: string | null) => {
           return "/social"
       case "News":
           return "/News"
+      case "favourites":
+          return "/favourites"
       case "Profile":
           return "/Profile"
       default:

@@ -27,7 +27,7 @@ export interface response {
     address: string
     coverImage: string
     note: string
-    price: string
+    price: number
     ownedBy: string
     type: string
     title: string

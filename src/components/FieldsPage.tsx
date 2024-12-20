@@ -29,10 +29,12 @@ export default function FieldsPage() {
                             <FieldItem _id={item._id} key={item._id} type={item.type} address={item.address} className="my-2" Name={item.title} Icon={item.coverImage} location={item.location} price={item.price} />
                         ))}
                     </div>
-                    <div className="hidden md:grid md:grid-cols-2 xl:grid-cols-3 gap-4 mt-24 maxWidth75vw">
-                        {data?.field?.map((item: response) => (
-                            <FieldItemBox key={item._id} _id={item._id} type={item.type} address={item.address} className="my-2" Name={item.title} Icon={item.coverImage} location={item.location} price={item.price} />
-                        ))}
+                    <div className="mt-28">
+                        <div className="hidden md:grid md:grid-cols-2 xl:grid-cols-3 gap-4 container">
+                            {data?.field?.map((item: response) => (
+                                <FieldItemBox key={item._id} _id={item._id} type={item.type} address={item.address} className="my-2" Name={item.title} Icon={item.coverImage} location={item.location} price={item.price} />
+                            ))}
+                        </div>
                     </div>
                 </>) : (
                 <CenteredPage className="">

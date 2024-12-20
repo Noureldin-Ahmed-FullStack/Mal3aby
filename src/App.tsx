@@ -40,7 +40,7 @@ function App() {
 
   const ref = useRef<HTMLDivElement>(null);
   const navbarItems = [
-    { name: 'Home', link: 'home' }, { name: 'social', link: 'social' }, { name: 'News', link: 'News' }, { name: 'Profile', link: 'Profile' }
+    { name: 'Home', link: 'home' }, { name: 'favourites', link: 'favourites' }, { name: 'social', link: 'social' }, { name: 'News', link: 'News' }, { name: 'Profile', link: 'Profile' }
   ]
   const darkTheme = createTheme({
     palette: {
@@ -87,7 +87,7 @@ function App() {
       <ThemeProvider theme={darkTheme}>
         {currentDevice == "Other" && <FloatingNav navItems={navbarItems} />}
         <Outlet />
-        {currentDevice == "Other" && <TabLayout />}
+        {currentDevice != "Other" && <TabLayout />}
         {/* <OpenIconSpeedDial /> */}
       </ThemeProvider>
 

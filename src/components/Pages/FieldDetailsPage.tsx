@@ -10,8 +10,10 @@ import Grid from '@mui/material/Grid2';
 import "slick-carousel/slick/slick-theme.css";
 import StarRateIcon from '@mui/icons-material/StarRate';
 import { response } from "../../types";
-import { CardBody} from "../ui/3d-card";
+import { CardBody } from "../ui/3d-card";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { Chip } from "@mui/material";
+import BookingButton from "./BookingButton";
 export default function FieldDetailsPage() {
 
     var settings = {
@@ -26,12 +28,12 @@ export default function FieldDetailsPage() {
     const { fieldID } = useParams();
     const { theme } = useThemeStore();
     const { data } = useFieldDetails(fieldID)
-    const [Field, setField] = useState<response>()
+    const [Field, setField] = useState<response | "error">()
     useEffect(() => {
         console.log(data);
         setField(data)
     }, [data])
-    if (Field) {
+    if (Field && Field != "error") {
         return (
             <div className="grow flex flex-col">
                 <div className="hidden md:block">
@@ -54,21 +56,24 @@ export default function FieldDetailsPage() {
                                     <p><StarRateIcon /><StarRateIcon /><StarRateIcon /><StarRateIcon /><StarRateIcon /></p>
                                 </div>
                                 <div className="flex justify-between mt-3">
-                                    <p className="">Address</p>
+                                    <p className="">Address:</p>
                                     <a href={Field.location} target="_blank">{Field.address}<LocationOnIcon /></a>
                                 </div>
                                 <div className="flex justify-start mt-3">
                                     <p>{Field.note}</p>
                                 </div>
-                                <div>
-                                    <button className="px-4 py-2 w-full mt-5 rounded-xl hover:text-inherit bg-black dark:bg-white dark:text-black text-white text-xs font-bold">Book</button>
+                                <div className="mb-4">
+                                    <BookingButton _id={Field._id} title={Field.title} price={Field.price} />
                                 </div>
+                                {Field.tags.map((tag, index) => (
+                                    <Chip clickable key={index} className="!me-2" color="secondary" label={tag} />
+                                ))}
                             </Grid>
                         </Grid>
 
                     </CenteredPage>
                 </div>
-                <div className="md:hidden grow flex flex-col">
+                <div className="md:hidden grow flex flex-col text-zinc-900 dark:text-zinc-200">
 
                     <div className="carousel-container">
                         <Slider {...settings}>
@@ -94,15 +99,20 @@ export default function FieldDetailsPage() {
                             <p>{Field.note}</p>
                         </div>
                         <div>
-                            <button className="px-4 py-2 w-full mt-5 rounded-xl hover:text-inherit bg-black dark:bg-white dark:text-black text-white text-xs font-bold">Book</button>
+                            <BookingButton _id={Field._id} title={Field.title} price={Field.price} />
                         </div>
                     </CardBody>
                 </div>
             </div>)
+    } else if (Field == "error") {
+        return (
+            <CenteredPage>
+                <h4 className="text-7xl mb-5 text-center text-red-700 dark:text-red-800 font-medium agu-display">error 404: This Item doesnt exist</h4>
+            </CenteredPage>)
     } else {
         return (
             <CenteredPage>
-                <h4 className="text-7xl mb-5 text-orange-700 dark:text-zinc-200 font-medium agu-display">Loading</h4>
+                <h4 className="text-7xl mb-5 text-center text-orange-700 dark:text-zinc-200 font-medium agu-display">Loading</h4>
                 <GridLoader size={25} color={theme == 'dark' ? 'white' : 'orange'} />
             </CenteredPage>
         )

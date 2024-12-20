@@ -7,6 +7,7 @@ import axios from 'axios';
 import { Alert, Chip, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import FileUpload from '../ui/customFileUpload';
 import { PlaceholdersAndVanishInput } from '../ui/placeholders-and-vanish-input';
+import { toast } from 'react-toastify';
 
 export default function AddFieldButton() {
     const [pendingRequest, setPendingRequest] = useState(false)
@@ -57,7 +58,7 @@ export default function AddFieldButton() {
             });
             const formJson = Object.fromEntries((formData as any).entries());
             console.log(formJson);
-            const strings = [formJson.title, formJson.ownedBy, formJson.location, formJson.price]
+            const strings = [formJson.title, formJson.ownedBy, formJson.location, formJson.price, formJson.address, formJson.hourCount]
             const emptyIndices = findEmptyStringIndices(strings);
             setEmptyIndicesState(findEmptyStringIndices(strings))
             let errorsArray = []
@@ -74,7 +75,13 @@ export default function AddFieldButton() {
                         errorsArray.push("Location is required")
                         break;
                     case 3:
-                        errorsArray.push("Price is required")
+                        errorsArray.push("price is required")
+                        break;
+                    case 4:
+                        errorsArray.push("address is required")
+                        break;
+                    case 5:
+                        errorsArray.push("working hours is required")
                         break;
                     default:
                         break;
@@ -86,10 +93,33 @@ export default function AddFieldButton() {
             if (emptyIndices.length != 0) {
                 return
             }
+            if (formJson.hourCount < 0 || formJson.price < 0) {
+                toast.error("working hours or price cannot be below zero!", {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+                return
+            }
             setValidationErrors([])
             setEmptyIndicesState([])
         } else {
             console.log("an error has occured");
+            toast.error("an error has occured", {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
             return
         }
         setPendingRequest(true)
@@ -100,6 +130,16 @@ export default function AddFieldButton() {
             setPendingRequest(false)
         } catch (error) {
             console.log(error);
+            toast.error("an error has occured", {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
             setPendingRequest(false)
         }
         handleCloseDialog();
@@ -135,9 +175,10 @@ export default function AddFieldButton() {
                     <Grid container spacing={2} rowSpacing={1}>
                         <Grid size={6}><TextField error={emptyIndicesState.includes(0)} required fullWidth id="title" name='title' label="Title" variant="outlined" /></Grid>
                         <Grid size={6}><TextField error={emptyIndicesState.includes(1)} required fullWidth id="ownedBy" name='ownedBy' label="Owned by" variant="outlined" /></Grid>
-                        <Grid size={6}><TextField error={emptyIndicesState.includes(2)} required fullWidth id="location" name='location' label="Location" variant="outlined" /></Grid>
-                        <Grid size={6}><TextField error={emptyIndicesState.includes(3)} required fullWidth id="price" name='price' label="price" variant="outlined" type='number' /></Grid>
-                        <Grid size={12}>
+                        <Grid size={6}><TextField error={emptyIndicesState.includes(3)} required fullWidth id="price" name='price' label="price" variant="outlined" type='number' inputProps={{ min: 0 }} /></Grid>
+                        <Grid size={6}><TextField error={emptyIndicesState.includes(4)} required fullWidth id="address" name='address' label="address" variant="outlined" /></Grid>
+                        <Grid size={12}><TextField error={emptyIndicesState.includes(2)} required fullWidth id="location" name='location' label="Google maps Location" variant="outlined" /></Grid>
+                        <Grid size={6}>
                             <Select
                                 required
                                 className="overflow-hidden"
@@ -157,6 +198,7 @@ export default function AddFieldButton() {
                                 <MenuItem value={'paddle'}>Paddle ball</MenuItem>
                             </Select>
                         </Grid>
+                        <Grid size={6}><TextField error={emptyIndicesState.includes(5)} type='number' inputProps={{ min: 0 }} required fullWidth id="hourCount" name='hourCount' label="Working Hours" variant="outlined" /></Grid>
 
                         <Grid size={12}>
                             <TextField
@@ -180,7 +222,7 @@ export default function AddFieldButton() {
 
 
                     <div className="mt-5">
-                        <FileUpload onChange={handleFileChange}/>
+                        <FileUpload onChange={handleFileChange} />
                     </div>
                 </form>
                 <div className='bg-zinc-100 dark:bg-zinc-800 dark:bg-opacity-20 p-3 rounded'>

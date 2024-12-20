@@ -8,10 +8,12 @@ import KeyboardTabIcon from '@mui/icons-material/KeyboardTab';
 import { Link } from "react-router-dom";
 import { useUserFavsContext } from "../../context/UserContext";
 import { response } from "../../types";
-
-export default function FieldsPage() {
+interface FavouritesPageProps {
+    className?: string; // Optional className prop
+}
+export default function Favouritespage({ className }: FavouritesPageProps) {
     // const { userData } = useUserContext()
-    const { favsList , favsLoading } = useUserFavsContext()
+    const { favsList, favsLoading } = useUserFavsContext()
     const { theme } = useThemeStore();
     // console.log(data?.items)
     if (favsLoading) {
@@ -23,17 +25,17 @@ export default function FieldsPage() {
         )
     }
     return (
-        <div className="flex grow justify-center pt-24 md:pt-4 mb-20">
+        <div className={"flex mx-auto grow justify-center md:pt-4 maxWidth75vw " +className}>
             {favsList?.length != 0 ? (
                 <>
-                    <div className="static md:hidden maxWidth75vw">
+                    <div className="static md:hidden">
                         {favsList?.map((item: response) => (
-                            <FieldItem _id={item._id} key={item._id} type={item.type} address={item.address}  className="my-2" Name={item.title} Icon={item.coverImage} location={item.location} price={item.price} />
+                            <FieldItem _id={item._id} key={item._id} type={item.type} address={item.address} className="my-2" Name={item.title} Icon={item.coverImage} location={item.location} price={item.price} />
                         ))}
                     </div>
-                    <div className="hidden md:grid md:grid-cols-2 xl:grid-cols-3 gap-4 mt-24 maxWidth75vw">
+                    <div className="hidden md:grid md:grid-cols-2 xl:grid-cols-3 gap-4">
                         {favsList?.map((item: response) => (
-                            <FieldItemBox _id={item._id} key={item._id} type={item.type} address={item.address}  className="my-2" Name={item.title} Icon={item.coverImage} location={item.location} price={item.price} />
+                            <FieldItemBox _id={item._id} key={item._id} type={item.type} address={item.address} className="my-2" Name={item.title} Icon={item.coverImage} location={item.location} price={item.price} />
                         ))}
                     </div>
                 </>) : (
