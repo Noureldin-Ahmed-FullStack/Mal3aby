@@ -16,7 +16,7 @@ interface props {
     Name: string,
     type: string,
     Icon: string,
-    price: string,
+    price: number,
     location: string,
     address?: string,
     className?: string

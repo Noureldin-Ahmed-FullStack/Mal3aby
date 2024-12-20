@@ -20,7 +20,8 @@ export default function BookingButton(FieldData: FieldDataType) {
     const [pendingRequest, setPendingRequest] = useState(false)
     const [ChosenDate, setChosenDate] = useState('');
     const [TimeSlot, setTimeSlot] = useState('default');
-    const { data, isLoading ,isError} = useAvailability(FieldData._id, ChosenDate);
+    const { data, isLoading, isError } = useAvailability(FieldData._id, ChosenDate);
+    
     const queryClient = useQueryClient();
     const handleFieldTypeChange = (event: SelectChangeEvent) => {
         setTimeSlot(event.target.value as string);
@@ -39,8 +40,9 @@ export default function BookingButton(FieldData: FieldDataType) {
         }
         try {
             const response = await axios.post(BaseURL + 'booking/' + userData?._id, body)
-            queryClient.refetchQueries({ queryKey: ['availability'] });
+            await queryClient.refetchQueries({ queryKey: ['availability'] });
             console.log(response);
+            
             setPendingRequest(false)
         } catch (error) {
             const axiosError = error as AxiosError;
@@ -90,12 +92,12 @@ export default function BookingButton(FieldData: FieldDataType) {
         }
 
         return timeSlots.map((slot, index) => (
-            <MenuItem disabled={isTooLate(slot) || data?.includes(slot)} key={index} value={slot}>{slot} {(isTooLate(slot) || data?.includes(slot) && "(Taken or Unavailable)")}</MenuItem>
+            <MenuItem disabled={isTooLate(slot, ChosenDate) || data?.includes(slot)} key={index} value={slot}><p>{slot} {(isTooLate(slot, ChosenDate) || data?.includes(slot) && "(Taken or Unavailable)")}</p></MenuItem>
         ));
     }
 
     // Example Usage
-    const slots = generateTimeSlots({ hours: 8, startTime: "11 am" });
+    const slots = generateTimeSlots({ hours: 8, startTime: "3 pm" });
 
 
     const handleTabsChange = (
@@ -147,6 +149,7 @@ export default function BookingButton(FieldData: FieldDataType) {
                         id="appointment"
                         variant='outlined'
                         fullWidth
+                        disabled={isLoading || isError || ChosenDate == ""}
                         name="appointment"
                         value={TimeSlot}
                         label="appointment"

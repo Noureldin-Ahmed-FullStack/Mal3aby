@@ -65,8 +65,9 @@ export default function FieldDetailsPage() {
                                 <div className="mb-4">
                                     <BookingButton _id={Field._id} title={Field.title} price={Field.price} />
                                 </div>
+                                <p className="mb-2">Tags:</p>
                                 {Field.tags.map((tag, index) => (
-                                    <Chip clickable key={index} className="!me-2" color="secondary" label={tag} />
+                                    <Chip clickable key={index} className="!me-2" color="warning" label={tag} />
                                 ))}
                             </Grid>
                         </Grid>

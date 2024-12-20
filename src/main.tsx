@@ -23,6 +23,7 @@ import FieldsPage from './components/FieldsPage.tsx'
 import { BeamsHero } from './components/BreamsHero.tsx'
 import Favouritespage from './components/Pages/Favouritespage.tsx'
 import FieldDetailsPage from './components/Pages/FieldDetailsPage.tsx'
+import UserBookings from './components/Pages/UserBookings.tsx'
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
 
@@ -40,6 +41,7 @@ const router = createBrowserRouter([
       { path: "/field/:fieldID", element: <FieldDetailsPage /> },
       { path: "/soccer", element: <FieldsPage /> },
       { path: "/paddle", element: <FieldsPage /> },
+      { path: "/myBookings", element: <UserBookings /> },
       { path: "/favourites", element: <Favouritespage className='my-28'/> },
       { path: "/pool-billiard", element: <FieldsPage /> },
       { path: "/swimming-pool", element: <FieldsPage /> },

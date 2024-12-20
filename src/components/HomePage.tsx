@@ -52,7 +52,7 @@ export default function HomePage() {
                             </div>
                         </div>
                         <div className="my-10 mb-16">
-                            <button className="flex  justify-center items-center w-full bg-slate-700 hover:bg-slate-800 transition-all duration-100 ease-in"><EditCalendarIcon /> <p className="ms-3">Bookings</p></button>
+                            <Link to={"/myBookings"} className="flex p-3 text-zinc-300 rounded hover:text-zinc-200 justify-center items-center w-full bg-slate-700 hover:bg-slate-800 transition-all duration-100 ease-in"><EditCalendarIcon /> <p className="ms-3">Bookings</p></Link>
                         </div>
                     </div>
                 </div>
