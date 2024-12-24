@@ -37,6 +37,7 @@ export default function BookingButton(FieldData: FieldDataType) {
             date: ChosenDate,
             time: TimeSlot,
             price: FieldData.price,
+            user: userData
         }
         try {
             const response = await axios.post(BaseURL + 'testPay/' + userData?._id, body)
