@@ -39,11 +39,12 @@ export default function BookingButton(FieldData: FieldDataType) {
             price: FieldData.price,
         }
         try {
-            const response = await axios.post(BaseURL + 'booking/' + userData?._id, body)
+            const response = await axios.post(BaseURL + 'testPay/' + userData?._id, body)
             await queryClient.refetchQueries({ queryKey: ['availability'] });
-            console.log(response);
+            console.log(response.data);
             
             setPendingRequest(false)
+            window.location.href = response.data.paymentUrl
         } catch (error) {
             const axiosError = error as AxiosError;
             toast.error(axiosError.response?.data as string, {
