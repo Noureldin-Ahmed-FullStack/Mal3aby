@@ -63,7 +63,7 @@ export default function FieldDetailsPage() {
                                     <p>{Field.note}</p>
                                 </div>
                                 <div className="mb-4">
-                                    <BookingButton _id={Field._id} title={Field.title} price={Field.price} />
+                                    <BookingButton _id={Field._id} title={Field.title} price={Field.price} owner={Field.ownedBy}/>
                                 </div>
                                 <p className="mb-2">Tags:</p>
                                 {Field.tags.map((tag, index) => (
@@ -100,7 +100,7 @@ export default function FieldDetailsPage() {
                             <p>{Field.note}</p>
                         </div>
                         <div>
-                            <BookingButton _id={Field._id} title={Field.title} price={Field.price} />
+                            <BookingButton _id={Field._id} title={Field.title} price={Field.price} owner={Field.ownedBy}/>
                         </div>
                     </CardBody>
                 </div>

@@ -88,3 +88,6 @@ button:focus-visible {
   }
 }
 
+.border-1{
+  border-width:1px;
+}

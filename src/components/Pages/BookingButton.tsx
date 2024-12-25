@@ -13,6 +13,7 @@ import { useQueryClient } from '@tanstack/react-query';
 interface FieldDataType {
     _id: string,
     price: number,
+    owner: string,
     title: string
 }
 export default function BookingButton(FieldData: FieldDataType) {
@@ -37,7 +38,8 @@ export default function BookingButton(FieldData: FieldDataType) {
             date: ChosenDate,
             time: TimeSlot,
             price: FieldData.price,
-            user: userData
+            user: userData,
+            owner: FieldData.owner
         }
         try {
             const response = await axios.post(BaseURL + 'testPay/' + userData?._id, body)
