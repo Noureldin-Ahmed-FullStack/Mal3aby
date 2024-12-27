@@ -29,7 +29,7 @@ export default function PaymentPage() {
         return (
             <div className='mt-28 w-11/12 mx-auto'>
                 <NiceDiv className='px-0'>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                             <h1 className='text-center'>Payment Succesful!</h1>
                             <img className='w-8/12 mx-auto' src="https://ssniper.sirv.com/Mal3aby%20Project/Payment-success1.svg" alt="Payment Successful" />
@@ -47,7 +47,7 @@ export default function PaymentPage() {
                 <NiceDiv>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <h1 className='text-center'>Uh Oh! Payment Failed!</h1>
+                            <h1 className='text-center text-red-900'>Uh Oh! Payment Failed!</h1>
                             <img className='w-8/12 mx-auto' src="https://ssniper.sirv.com/Mal3aby%20Project/Failed-Payment-color-800px.png" alt="Payment Failed" />
                         </div>
                         <div>

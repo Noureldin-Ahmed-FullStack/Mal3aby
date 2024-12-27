@@ -6,8 +6,7 @@ import CenteredPage from '../CenteredPage';
 import { Link } from 'react-router-dom';
 import FieldItemBox from '../ui/FieldItemBox';
 import FieldItem from "../ui/FieldItem";
-import { GridLoader } from 'react-spinners';
-import { useThemeStore } from '../../context/ThemeContext';
+import LoadingPage from './LoadingPage';
 
 interface Props {
   userID: string;
@@ -16,7 +15,6 @@ interface Props {
 export default function FieldsOfUser({ userID }: Props) {
   const { data, isLoading } = useFieldOfUser(userID);
   const [fields, setFields] = useState<response[]>([]);
-  const { theme } = useThemeStore();
 
   // Update fields when data changes
   useEffect(() => {
@@ -63,12 +61,7 @@ export default function FieldsOfUser({ userID }: Props) {
 
   if (isLoading) {
     return (
-      <CenteredPage>
-        <h4 className="text-6xl mb-5 text-orange-700 dark:text-zinc-200 font-medium agu-display">
-          Loading
-        </h4>
-        <GridLoader size={25} color={theme === 'dark' ? 'white' : 'orange'} />
-      </CenteredPage>
+      <LoadingPage />
     );
   }
 

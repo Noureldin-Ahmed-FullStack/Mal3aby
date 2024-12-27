@@ -1,6 +1,4 @@
-import { GridLoader } from "react-spinners";
 // import { useFavs } from "../../hooks/FetchFields";
-import { useThemeStore } from "../../context/ThemeContext";
 import CenteredPage from "../CenteredPage";
 import FieldItem from "../ui/FieldItem";
 import FieldItemBox from "../ui/FieldItemBox";
@@ -8,20 +6,17 @@ import KeyboardTabIcon from '@mui/icons-material/KeyboardTab';
 import { Link } from "react-router-dom";
 import { useUserFavsContext } from "../../context/UserContext";
 import { response } from "../../types";
+import LoadingPage from "./LoadingPage";
 interface FavouritesPageProps {
     className?: string; // Optional className prop
 }
 export default function Favouritespage({ className }: FavouritesPageProps) {
     // const { userData } = useUserContext()
     const { favsList, favsLoading } = useUserFavsContext()
-    const { theme } = useThemeStore();
     // console.log(data?.items)
     if (favsLoading) {
         return (
-            <CenteredPage>
-                <h4 className="text-6xl mb-5 text-orange-700 dark:text-zinc-200 font-medium agu-display">Loading</h4>
-                <GridLoader size={25} color={theme == 'dark' ? 'white' : 'orange'} />
-            </CenteredPage>
+            <LoadingPage />
         )
     }
     return (

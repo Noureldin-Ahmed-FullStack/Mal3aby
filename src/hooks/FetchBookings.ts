@@ -8,9 +8,9 @@ export const fetchAvailability = async (fieldID: string | undefined, date: strin
     });
     return response.data;
 };
-export const useAvailability = (fieldID: string | undefined,date: string | undefined) => {
+export const useAvailability = (fieldID: string | undefined, date: string | undefined) => {
     return useQuery({
-        queryKey: ['availability' , fieldID, date],
+        queryKey: ['availability', fieldID, date],
         queryFn: () => fetchAvailability(fieldID, date),
         enabled: !!fieldID && !!date,
         staleTime: 5 * 60 * 1000,
@@ -41,5 +41,72 @@ export const useBookingDetails = (bookID: string | undefined) => {
         enabled: !!bookID,
         staleTime: 5 * 60 * 1000,
         refetchOnWindowFocus: false,
+    });
+}
+const fetchUserBookings = async (userID: string | undefined) => {
+    
+    if (!userID) {
+        return []
+    }
+    try {
+        const response = await axios.get(BaseURL + "bookingOfUser/" + userID);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return []; // Return an empty array on error
+    }
+}
+export const useUserBookings = (userID: string | undefined) => {
+    return useQuery({
+        queryKey: ['bookingOfUser' + userID],
+        queryFn: () => fetchUserBookings(userID),
+        enabled: !!userID,
+        staleTime: 5 * 60 * 1000,
+        refetchOnWindowFocus: false,
+        placeholderData: [], // Ensure data is never undefined
+    });
+}
+const fetchOwnerBookings = async (userID: string | undefined) => {
+    if (!userID) {
+        return []
+    }
+    try {
+        const response = await axios.get(BaseURL + "bookingOfOwner/" + userID);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return []; // Return an empty array on error
+    }
+}
+export const useOwnerBookings = (userID: string | undefined) => {
+    return useQuery({
+        queryKey: ['bookingOfOwner' + userID, userID],
+        queryFn: () => fetchOwnerBookings(userID),
+        enabled: !!userID,
+        staleTime: 5 * 60 * 1000,
+        refetchOnWindowFocus: false,
+        placeholderData: [], // Ensure data is never undefined
+    });
+}
+const fetchAdminBookings = async (userID: string | undefined) => {
+    if (!userID) {
+        return []
+    }
+    try {
+        const response = await axios.get(BaseURL + "bookingOfAdmin/" + userID);
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        return []; // Return an empty array on error
+    }
+}
+export const useAdminBookings = (userID: string | undefined) => {
+    return useQuery({
+        queryKey: ['bookingOfAdmin' + userID, userID],
+        queryFn: () => fetchAdminBookings(userID),
+        enabled: !!userID,
+        staleTime: 5 * 60 * 1000,
+        refetchOnWindowFocus: false,
+        placeholderData: [], // Ensure data is never undefined
     });
 }

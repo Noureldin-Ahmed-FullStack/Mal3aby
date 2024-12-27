@@ -7,6 +7,7 @@ import { ContentCopy } from '@mui/icons-material';
 import FieldsOfUser from './FieldsOfUser';
 import Favouritespage from './Favouritespage';
 import { NiceDiv } from '../ui/NiceDiv';
+import { Link } from 'react-router-dom';
 export default function ProfilePage() {
   const { userData } = useUserContext();
   console.log(userData);
@@ -21,20 +22,51 @@ export default function ProfilePage() {
       setTimeout(() => setTooltipText('Click to copy'), 1500); // Reset tooltip text after 1.5s
     });
   };
+  interface RoleDivProps {
+    role: string | undefined;
+  }
 
+  const RoleDiv: React.FC<RoleDivProps> = ({ role }) => {
+    switch (role) {
+      case "admin":
+        return <div className='flex flex-col'>
+          <p>Admin Content</p>
+          {userData?.role == "admin" && <AddFieldButton />}
+          <Link to={"/myBookings"} className='w-full mt-5 px-4 py-3 text-center rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold hover:text-white'>manage Bookings</Link>
+        </div>;
+
+      case "user":
+        return <div className='flex flex-col'>
+          <p>User Content</p>
+          <Link to={"/myBookings"} className='w-full mt-5 px-4 py-4 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold hover:text-white'>Your Bookings</Link>
+        </div>;
+
+      case "owner":
+        return <div className='flex flex-col'>
+          <p>Owner Content</p>
+          <p>Wallet: {userData?.wallet}Egp.</p>
+          <Link to={"/myBookings"} className='w-full mt-5 px-4 py-4 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold hover:text-white'>manage Bookings</Link>
+        </div>;
+
+      default:
+        return <div className='flex flex-col'>
+          <Link to={"/sign-up"} className='w-full mt-5 px-4 py-4 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold hover:text-white'>Log-in</Link>
+        </div>;
+    }
+  };
   return (
     <div className='container mx-auto px-3 mt-28'>
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, sm: 6, md: 6 }}>
-          <NiceDiv>
+        <NiceDiv className='h-full'>
             <Grid container spacing={2}>
               <Grid size={3}>
                 <img className='rounded' src={userData?.userPFP} alt={userData?.name} />
               </Grid>
               <Grid size={9}>
                 <Tooltip title={tooltipText} arrow followCursor>
-                <p className='break-all' onClick={() => handleCopy(userData?._id)}>user iD: <span className='mx-2 hover:text-blue-400 transition-all cursor-pointer'>{userData?._id}  <ContentCopy /></span></p>
-                 
+                  <p className='break-all' onClick={() => handleCopy(userData?._id)}>user iD: <span className='mx-2 hover:text-blue-400 transition-all cursor-pointer'>{userData?._id}  <ContentCopy /></span></p>
+
                 </Tooltip>
                 <p className='break-all'>username: {userData?.name}</p>
                 <p className='break-all'>email: {userData?.email}</p>
@@ -45,12 +77,13 @@ export default function ProfilePage() {
           </NiceDiv>
         </Grid>
         <Grid size={{ xs: 12, sm: 6, md: 6 }}>
-          <NiceDiv>{userData?.role}</NiceDiv>
+          <NiceDiv className='h-full'>
+            <RoleDiv role={userData?.role} />
+          </NiceDiv>
         </Grid>
-      {userData?.role == "admin" && <AddFieldButton />}
 
         <Grid size={12}>
-          <NiceDiv>{userData?.role != "user" && userData? <FieldsOfUser userID={userData?._id}/> : <Favouritespage />}</NiceDiv>
+          <NiceDiv>{userData?.role != "user" && userData ? <FieldsOfUser userID={userData?._id} /> : <Favouritespage />}</NiceDiv>
         </Grid>
       </Grid>
     </div>

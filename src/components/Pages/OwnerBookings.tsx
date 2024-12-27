@@ -1,5 +1,5 @@
 import { useUserContext } from '../../context/UserContext';
-import { useUserBookings } from '../../hooks/FetchBookings'
+import { useOwnerBookings } from '../../hooks/FetchBookings'
 import { NiceDiv } from '../ui/NiceDiv'
 import LinkIcon from '@mui/icons-material/Link';
 import { QRCodeSVG } from 'qrcode.react';
@@ -8,9 +8,9 @@ import { MdOutlineCalendarMonth } from "react-icons/md";
 import LoadingPage from './LoadingPage';
 import ErrorPage from './ErrorPage';
 
-export default function UserBookings() {
+export default function OwnerBookings() {
   const { userData } = useUserContext();
-  const { data, isLoading, isFetching, isError } = useUserBookings(userData?._id)
+  const { data, isLoading, isFetching, isError } = useOwnerBookings(userData?._id)
   console.log(data);
   if (isLoading || isFetching || !userData) {
     return <LoadingPage />
@@ -22,7 +22,7 @@ export default function UserBookings() {
   return (
     <div className='maxWidth75vw mx-auto pt-28 text-zinc-800 dark:text-zinc-300'>
       <NiceDiv>
-      <h1 className='text-center mb-3'>Your Bookings</h1>
+      <h1 className='text-center mb-3'>Manage Your bookings</h1>
         <div className='w-full grid gap-4 grid-cols-1 sm:grid-cols-2'>
           {data.map((bookingItem: any) => (
             <NiceDiv key={bookingItem._id}>

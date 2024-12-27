@@ -10,7 +10,7 @@ import { ToastContainer } from 'react-toastify';
 import "yet-another-react-lightbox/styles.css";
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import HomePage from './components/HomePage.tsx'
-import { ClerkProvider, SignIn, SignUp } from '@clerk/clerk-react'
+import { ClerkProvider, SignedIn, SignedOut, SignIn, SignUp } from '@clerk/clerk-react'
 import CenteredPage from './components/CenteredPage.tsx'
 import NotFoundPage from './components/NotFoundPage.tsx'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -23,9 +23,10 @@ import FieldsPage from './components/FieldsPage.tsx'
 import { BeamsHero } from './components/BreamsHero.tsx'
 import Favouritespage from './components/Pages/Favouritespage.tsx'
 import FieldDetailsPage from './components/Pages/FieldDetailsPage.tsx'
-import UserBookings from './components/Pages/UserBookings.tsx'
 import PaymentPage from './components/Pages/PaymentPage.tsx'
 import TicketPage from './components/Pages/TicketPage.tsx'
+import BookingsParent from './components/Pages/BookingsParent.tsx'
+import LoginFirstPage from './components/Pages/LoginFirstPage.tsx'
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
 
@@ -42,15 +43,15 @@ const router = createBrowserRouter([
       { path: "/Mal3aby", element: <HomePage /> },
       { path: "/field/:fieldID", element: <FieldDetailsPage /> },
       { path: "/soccer", element: <FieldsPage /> },
-      { path: "/ticket/:ticketID", element: <TicketPage /> },
+      { path: "/ticket/:ticketID", element: <div className='mt-28'><TicketPage /></div> },
       { path: "/paddle", element: <FieldsPage /> },
       { path: "/payment-response", element: <PaymentPage /> },
-      { path: "/myBookings", element: <UserBookings /> },
+      { path: "/myBookings", element: <BookingsParent /> },
       { path: "/favourites", element: <Favouritespage className='my-28'/> },
       { path: "/pool-billiard", element: <FieldsPage /> },
       { path: "/swimming-pool", element: <FieldsPage /> },
       { path: "/news", element: <BeamsHero /> },
-      { path: "/Profile", element: <ProfilePage />},
+      { path: "/Profile", element: <><SignedIn><ProfilePage /></SignedIn><SignedOut><LoginFirstPage /></SignedOut></>},
       { path: "/managment", element: <CenteredPage><Managment /></CenteredPage> },
       { path: "/Social", element: <SocialPage /> },
       { path: "/sign-in", element: <CenteredPage className="mt-20"><SignUp routing='hash' forceRedirectUrl={'/Mal3aby'} /></CenteredPage> },

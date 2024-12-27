@@ -14,7 +14,9 @@ interface FieldDataType {
     _id: string,
     price: number,
     owner: string,
-    title: string
+    title: string,
+    startTime: string,
+    hourCount: number
 }
 export default function BookingButton(FieldData: FieldDataType) {
     const { userData } = useUserContext();
@@ -22,7 +24,7 @@ export default function BookingButton(FieldData: FieldDataType) {
     const [ChosenDate, setChosenDate] = useState('');
     const [TimeSlot, setTimeSlot] = useState('default');
     const { data, isLoading, isError } = useAvailability(FieldData._id, ChosenDate);
-    
+
     const queryClient = useQueryClient();
     const handleFieldTypeChange = (event: SelectChangeEvent) => {
         setTimeSlot(event.target.value as string);
@@ -45,7 +47,7 @@ export default function BookingButton(FieldData: FieldDataType) {
             const response = await axios.post(BaseURL + 'testPay/' + userData?._id, body)
             await queryClient.refetchQueries({ queryKey: ['availability'] });
             console.log(response.data);
-            
+
             setPendingRequest(false)
             window.location.href = response.data.paymentUrl
         } catch (error) {
@@ -101,7 +103,7 @@ export default function BookingButton(FieldData: FieldDataType) {
     }
 
     // Example Usage
-    const slots = generateTimeSlots({ hours: 8, startTime: "3 pm" });
+    const slots = generateTimeSlots({ hours: FieldData.hourCount, startTime: FieldData.startTime });
 
 
     const handleTabsChange = (
@@ -124,6 +126,7 @@ export default function BookingButton(FieldData: FieldDataType) {
             <>
                 <CustomDialog
                     open={isDialogOpen}
+                    maximizeWidth
                     onClose={handleCloseDialog}
                     isDisabled={pendingRequest || TimeSlot == "default" || ChosenDate == "" || isLoading || isError}
                     onConfirm={() => handleConfirmAction()}
@@ -141,9 +144,9 @@ export default function BookingButton(FieldData: FieldDataType) {
                         onChange={handleTabsChange}
                         aria-label="Platform"
                     >
-                        <ToggleButton value={currentDate.toLocaleDateString('en-GB')}>Today <br />({currentDate.toLocaleDateString('en-GB')})</ToggleButton>
-                        <ToggleButton value={tomorrow.toLocaleDateString('en-GB')}>Tomorrow <br />({tomorrow.toLocaleDateString('en-GB')})</ToggleButton>
-                        <ToggleButton value={dayAfterTomorrow.toLocaleDateString('en-GB')}>Day after tomorrow <br />({dayAfterTomorrow.toLocaleDateString('en-GB')})</ToggleButton>
+                        <ToggleButton className='!text-sm sm:!text-base' value={currentDate.toLocaleDateString('en-GB')}>Today <br />({currentDate.toLocaleDateString('en-GB')})</ToggleButton>
+                        <ToggleButton className='!text-sm sm:!text-base' value={tomorrow.toLocaleDateString('en-GB')}>Tomorrow <br />({tomorrow.toLocaleDateString('en-GB')})</ToggleButton>
+                        <ToggleButton className='!text-sm sm:!text-base' value={dayAfterTomorrow.toLocaleDateString('en-GB')}>Day after tomorrow <br />({dayAfterTomorrow.toLocaleDateString('en-GB')})</ToggleButton>
                     </ToggleButtonGroup>
                     <p>Pick session time</p>
                     <Select
@@ -159,11 +162,11 @@ export default function BookingButton(FieldData: FieldDataType) {
                         label="appointment"
                         onChange={handleFieldTypeChange}
                     >
-                        <MenuItem value={'default'}>-- Pick session time --</MenuItem>
+                        <MenuItem value={'default'}>{isLoading ? "-- Loading --" : "-- Pick session time --"}</MenuItem>
                         {slots}
                     </Select>
                 </CustomDialog>
-                <button onClick={handleOpenDialog} className="px-4 py-2 w-full mt-5 rounded-xl hover:text-white bg-black dark:bg-white dark:text-black text-white text-xs font-bold">Book</button>
+                <button onClick={handleOpenDialog} className="px-4 py-2 w-full mt-5 rounded-xl hover:text-white bg-black dark:bg-white dark:text-black text-white font-bold text-2xl">Book</button>
             </>
         )
     } else {

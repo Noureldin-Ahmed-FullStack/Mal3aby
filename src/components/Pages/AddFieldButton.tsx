@@ -19,8 +19,12 @@ export default function AddFieldButton() {
             .filter(index => index !== -1);
     }
     const [fieldType, setFieldType] = useState('select_field_type');
+    const [StartTime, setStartTime] = useState('select_start_time');
     const handleFieldTypeChange = (event: SelectChangeEvent) => {
         setFieldType(event.target.value as string);
+    };
+    const handleStartTimeChange = (event: SelectChangeEvent) => {
+        setStartTime(event.target.value as string);
     };
     const placeholders = [
         "5v5",
@@ -93,8 +97,8 @@ export default function AddFieldButton() {
             if (emptyIndices.length != 0) {
                 return
             }
-            if (formJson.hourCount < 0 || formJson.price < 0) {
-                toast.error("working hours or price cannot be below zero!", {
+            if (formJson.price < 0) {
+                toast.error("price cannot be below zero", {
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -104,6 +108,21 @@ export default function AddFieldButton() {
                     progress: undefined,
                     theme: "light",
                 });
+                return
+            }
+            if (formJson.hourCount < 0 || formJson.hourCount >24) {
+                toast.error("working hours cannot be below zero or above 24!", {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                });
+                console.log("working hours cannot be below zero or above 24!");
+                
                 return
             }
             setValidationErrors([])
@@ -141,8 +160,22 @@ export default function AddFieldButton() {
                 theme: "light",
             });
             setPendingRequest(false)
+            handleCloseDialog();
+            return
         }
+
+        toast.success("Field added successfully", {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
         handleCloseDialog();
+
     };
     const handleOpenDialog = () => {
         setIsDialogOpen(true)
@@ -161,11 +194,11 @@ export default function AddFieldButton() {
             <CustomDialog
                 open={isDialogOpen}
                 onClose={handleCloseDialog}
-                isDisabled={pendingRequest || fieldType == "select_field_type"}
+                isDisabled={pendingRequest || fieldType == "select_field_type" || StartTime == "select_start_time"}
                 onConfirm={() => handleConfirmAction()}
                 title="Add Field"
                 confirmColor='primary'
-                confirmText="Confirm"
+                confirmText={pendingRequest ? "Loading" : "Confirm"}
                 cancelText="cancel"
             >
                 {validationErrors.map((item, index) => (
@@ -178,7 +211,7 @@ export default function AddFieldButton() {
                         <Grid size={6}><TextField error={emptyIndicesState.includes(3)} required fullWidth id="price" name='price' label="price" variant="outlined" type='number' inputProps={{ min: 0 }} /></Grid>
                         <Grid size={6}><TextField error={emptyIndicesState.includes(4)} required fullWidth id="address" name='address' label="address" variant="outlined" /></Grid>
                         <Grid size={12}><TextField error={emptyIndicesState.includes(2)} required fullWidth id="location" name='location' label="Google maps Location" variant="outlined" /></Grid>
-                        <Grid size={6}>
+                        <Grid size={12}>
                             <Select
                                 required
                                 className="overflow-hidden"
@@ -198,7 +231,47 @@ export default function AddFieldButton() {
                                 <MenuItem value={'paddle'}>Paddle ball</MenuItem>
                             </Select>
                         </Grid>
-                        <Grid size={6}><TextField error={emptyIndicesState.includes(5)} type='number' inputProps={{ min: 0 }} required fullWidth id="hourCount" name='hourCount' label="Working Hours" variant="outlined" /></Grid>
+                        <Grid size={6}>
+                            <Select
+                                required
+                                className="overflow-hidden"
+                                labelId="start time"
+                                id="start time"
+                                variant='outlined'
+                                fullWidth
+                                name="start time"
+                                value={StartTime}
+                                label="start time"
+                                onChange={handleStartTimeChange}
+                            >
+                                <MenuItem value={'select_start_time'}>select start time (required*)</MenuItem>
+                                <MenuItem value={'12 pm'}>12 pm</MenuItem>
+                                <MenuItem value={'1 pm'}>1 pm</MenuItem>
+                                <MenuItem value={'2 pm'}>2 pm</MenuItem>
+                                <MenuItem value={'3 pm'}>3 pm</MenuItem>
+                                <MenuItem value={'4 pm'}>4 pm</MenuItem>
+                                <MenuItem value={'5 pm'}>5 pm</MenuItem>
+                                <MenuItem value={'6 pm'}>6 pm</MenuItem>
+                                <MenuItem value={'7 pm'}>7 pm</MenuItem>
+                                <MenuItem value={'8 pm'}>8 pm</MenuItem>
+                                <MenuItem value={'9 pm'}>9 pm</MenuItem>
+                                <MenuItem value={'10 pm'}>10 pm</MenuItem>
+                                <MenuItem value={'11 pm'}>11 pm</MenuItem>
+                                <MenuItem value={'12 am'}>12 am</MenuItem>
+                                <MenuItem value={'1 am'}>1 am</MenuItem>
+                                <MenuItem value={'2 am'}>2 am</MenuItem>
+                                <MenuItem value={'3 am'}>3 am</MenuItem>
+                                <MenuItem value={'4 am'}>4 am</MenuItem>
+                                <MenuItem value={'5 am'}>5 am</MenuItem>
+                                <MenuItem value={'6 am'}>6 am</MenuItem>
+                                <MenuItem value={'7 am'}>7 am</MenuItem>
+                                <MenuItem value={'8 am'}>8 am</MenuItem>
+                                <MenuItem value={'9 am'}>9 am</MenuItem>
+                                <MenuItem value={'10 am'}>10 am</MenuItem>
+                                <MenuItem value={'11 am'}>11 am</MenuItem>
+                            </Select>
+                        </Grid>
+                        <Grid size={6}><TextField error={emptyIndicesState.includes(5)} type='number' inputProps={{ min: 0 ,max:24}} required fullWidth id="hourCount" name='hourCount' label="Working Hours" variant="outlined" /></Grid>
 
                         <Grid size={12}>
                             <TextField

@@ -8,6 +8,7 @@ interface userType {
   email: string,
   About?: string
   role: string
+  wallet: number
 }
 interface userState {
   userData: userType | null;
