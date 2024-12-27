@@ -110,7 +110,7 @@ export default function AddFieldButton() {
                 });
                 return
             }
-            if (formJson.hourCount < 0 || formJson.hourCount >24) {
+            if (formJson.hourCount < 0 || formJson.hourCount > 24) {
                 toast.error("working hours cannot be below zero or above 24!", {
                     position: "top-center",
                     autoClose: 5000,
@@ -122,7 +122,7 @@ export default function AddFieldButton() {
                     theme: "light",
                 });
                 console.log("working hours cannot be below zero or above 24!");
-                
+
                 return
             }
             setValidationErrors([])
@@ -271,7 +271,7 @@ export default function AddFieldButton() {
                                 <MenuItem value={'11 am'}>11 am</MenuItem>
                             </Select>
                         </Grid>
-                        <Grid size={6}><TextField error={emptyIndicesState.includes(5)} type='number' inputProps={{ min: 0 ,max:24}} required fullWidth id="hourCount" name='hourCount' label="Working Hours" variant="outlined" /></Grid>
+                        <Grid size={6}><TextField error={emptyIndicesState.includes(5)} type='number' inputProps={{ min: 0, max: 24 }} required fullWidth id="hourCount" name='hourCount' label="Working Hours" variant="outlined" /></Grid>
 
                         <Grid size={12}>
                             <TextField

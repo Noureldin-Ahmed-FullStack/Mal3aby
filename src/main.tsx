@@ -27,6 +27,7 @@ import PaymentPage from './components/Pages/PaymentPage.tsx'
 import TicketPage from './components/Pages/TicketPage.tsx'
 import BookingsParent from './components/Pages/BookingsParent.tsx'
 import LoginFirstPage from './components/Pages/LoginFirstPage.tsx'
+import ManageAllUsersPage from './components/Pages/ManageAllUsersPage.tsx'
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
 
@@ -45,6 +46,7 @@ const router = createBrowserRouter([
       { path: "/soccer", element: <FieldsPage /> },
       { path: "/ticket/:ticketID", element: <div className='mt-28'><TicketPage /></div> },
       { path: "/paddle", element: <FieldsPage /> },
+      { path: "/manageAllUsers", element: <ManageAllUsersPage /> },
       { path: "/payment-response", element: <PaymentPage /> },
       { path: "/myBookings", element: <BookingsParent /> },
       { path: "/favourites", element: <Favouritespage className='my-28'/> },

@@ -68,7 +68,7 @@ export default function SideBar() {
                             <ListItemText primary={"customer service"} />
                         </ListItemButton>
                     </ListItem>
-                    <ListItem className='text-inherit' component={Link} to="bookings" disablePadding>
+                    <ListItem className='text-inherit' component={Link} to="myBookings" disablePadding>
                         <ListItemButton>
                             <ListItemIcon>
                                 <EditCalendarIcon />

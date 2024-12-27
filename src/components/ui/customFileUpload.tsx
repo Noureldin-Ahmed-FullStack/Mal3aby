@@ -1,5 +1,5 @@
 import { Divider, IconButton, Menu, MenuItem } from '@mui/material';
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { useDropzone } from 'react-dropzone';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -47,11 +47,14 @@ const FileUpload: React.FC<FileUploadProps> = ({ onChange }) => {
 
   const handleFileChange = useCallback((newFiles: File[]) => {
     setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+  }, []);
+
+  useEffect(() => {
     if (onChange) {
-      onChange(newFiles);
+      onChange(files); // Trigger onChange after files state updates
     }
-  }, [onChange]);
-  
+  }, [files]);
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: handleFileChange,
     multiple: true, // Set to true if you want to allow multiple files

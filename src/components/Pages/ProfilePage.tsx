@@ -44,7 +44,10 @@ export default function ProfilePage() {
       case "owner":
         return <div className='flex flex-col'>
           <p>Owner Content</p>
+          <div className="border mt-2 border-green-400 rounded-b bg-green-100 px-4 py-3 text-green-700">
           <p>Wallet: {userData?.wallet}Egp.</p>
+          </div>
+          
           <Link to={"/myBookings"} className='w-full mt-5 px-4 py-4 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold hover:text-white'>manage Bookings</Link>
         </div>;
 
@@ -58,16 +61,19 @@ export default function ProfilePage() {
     <div className='container mx-auto px-3 mt-28'>
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, sm: 6, md: 6 }}>
-        <NiceDiv className='h-full'>
+          <NiceDiv className='h-full'>
             <Grid container spacing={2}>
               <Grid size={3}>
                 <img className='rounded' src={userData?.userPFP} alt={userData?.name} />
               </Grid>
               <Grid size={9}>
-                <Tooltip title={tooltipText} arrow followCursor>
-                  <p className='break-all' onClick={() => handleCopy(userData?._id)}>user iD: <span className='mx-2 hover:text-blue-400 transition-all cursor-pointer'>{userData?._id}  <ContentCopy /></span></p>
+                <div className="flex">
+                  <p className='w-2/5'>user iD: </p>
+                  <Tooltip title={tooltipText} arrow followCursor>
+                    <span onClick={() => handleCopy(userData?._id)} className='mx-2 break-all text-end hover:text-blue-400 transition-all cursor-pointer'>{userData?._id}  <ContentCopy /></span>
+                  </Tooltip>
+                </div>
 
-                </Tooltip>
                 <p className='break-all'>username: {userData?.name}</p>
                 <p className='break-all'>email: {userData?.email}</p>
                 {userData?.role != "user" && <p className='break-all'>Role:  {userData?.role}</p>}

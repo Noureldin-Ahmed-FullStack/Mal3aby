@@ -15,8 +15,8 @@ export interface UserData {
     role: 'user' | 'admin' | 'dev' | 'teamlead'
 }
 export interface Comments {
-    content: string
-    createdBy: UserData
+    comment: string
+    userID: UserData
     createdAt: string
 }
 export interface rating {

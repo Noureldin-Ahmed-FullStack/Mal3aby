@@ -4,9 +4,11 @@
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import { Link } from 'react-router-dom';
+import { useUserContext } from '../context/UserContext';
 
 export default function HomePage() {
 
+  const { userData} = useUserContext();
     return (
         <div className="flex flex-col grow items-center">
             {/* <Hero /> */}
@@ -51,9 +53,12 @@ export default function HomePage() {
                                 </Link>
                             </div>
                         </div>
-                        <div className="my-10 mb-16">
+                        <div className="my-10 mb-5">
                             <Link to={"/myBookings"} className="flex p-3 text-zinc-300 rounded hover:text-zinc-200 justify-center items-center w-full bg-slate-700 hover:bg-slate-800 transition-all duration-100 ease-in"><EditCalendarIcon /> <p className="ms-3 text-2xl">Bookings</p></Link>
                         </div>
+                        {userData?.role == 'admin' && <div className="my-5 mb-16">
+                            <Link to={"/manageAllUsers"} className="flex p-3 text-zinc-300 rounded hover:text-zinc-200 justify-center items-center w-full bg-slate-700 hover:bg-slate-800 transition-all duration-100 ease-in"><EditCalendarIcon /> <p className="ms-3 text-2xl">Manage All Users</p></Link>
+                        </div>}
                     </div>
                 </div>
             </div>

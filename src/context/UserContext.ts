@@ -7,7 +7,7 @@ interface userType {
   userPFP: string,
   email: string,
   About?: string
-  role: string
+  role: 'user' | 'admin' | 'owner' | 'dev'
   wallet: number
 }
 interface userState {
@@ -23,14 +23,14 @@ export const useUserContext = create<userState>((set) => ({
 
 
 interface UserFavsState {
-  favsList: response[]; 
+  favsList: response[];
   setfavsList: (favsList: response[]) => void;
-  favsLoading: boolean; 
+  favsLoading: boolean;
   setfavsLoading: (favsLoading: boolean) => void;
 }
 
 export const useUserFavsContext = create<UserFavsState>((set) => ({
-  favsList: [], 
+  favsList: [],
   setfavsList: (favsList) => set({ favsList }),
   favsLoading: true,
   setfavsLoading: (favsLoading) => set({ favsLoading }),
