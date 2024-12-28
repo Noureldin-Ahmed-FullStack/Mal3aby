@@ -80,11 +80,3 @@ export const useFieldDetails = (fieldID: string | undefined) => {
         refetchOnWindowFocus: false,
     });
 }
-// export const useSocialPostDetails = (SocialPostId: string) => {
-//     return useQuery({
-//         queryKey: ['SocialPostDetails', SocialPostId],
-//         queryFn: () => fetchSocialPostDetails(SocialPostId),
-//         staleTime: 5 * 60 * 1000,
-//         refetchOnWindowFocus: false,
-//     });
-// };

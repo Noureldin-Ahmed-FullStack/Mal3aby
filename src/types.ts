@@ -4,6 +4,7 @@ export interface SocialPost {
     createdBy?: UserData
     createdAt?: string
     role?: string
+    isNews?: boolean
     Images?: string[]
     _id?: string
 }

@@ -20,7 +20,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import Managment from './components/Pages/Managment.tsx'
 import ProfilePage from './components/Pages/ProfilePage.tsx'
 import FieldsPage from './components/FieldsPage.tsx'
-import { BeamsHero } from './components/BreamsHero.tsx'
 import Favouritespage from './components/Pages/Favouritespage.tsx'
 import FieldDetailsPage from './components/Pages/FieldDetailsPage.tsx'
 import PaymentPage from './components/Pages/PaymentPage.tsx'
@@ -28,6 +27,7 @@ import TicketPage from './components/Pages/TicketPage.tsx'
 import BookingsParent from './components/Pages/BookingsParent.tsx'
 import LoginFirstPage from './components/Pages/LoginFirstPage.tsx'
 import ManageAllUsersPage from './components/Pages/ManageAllUsersPage.tsx'
+import NewsPage from './components/Pages/NewsPage.tsx'
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
 
@@ -52,7 +52,7 @@ const router = createBrowserRouter([
       { path: "/favourites", element: <Favouritespage className='my-28'/> },
       { path: "/pool-billiard", element: <FieldsPage /> },
       { path: "/swimming-pool", element: <FieldsPage /> },
-      { path: "/news", element: <BeamsHero /> },
+      { path: "/news", element: <NewsPage /> },
       { path: "/Profile", element: <><SignedIn><ProfilePage /></SignedIn><SignedOut><LoginFirstPage /></SignedOut></>},
       { path: "/managment", element: <CenteredPage><Managment /></CenteredPage> },
       { path: "/Social", element: <SocialPage /> },

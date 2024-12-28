@@ -132,7 +132,7 @@ export function SinglePost(props: SocialPost) {
       >
         <p>Are you sure you want to Delete this post?</p>
       </CustomDialog>
-      <CommentsModal postData={SelectedPost} open={CommentOpen} handleClose={handleCommentClose} />
+      {!props.isNews && <CommentsModal postData={SelectedPost} open={CommentOpen} handleClose={handleCommentClose} />}
       <div className=" w-full relative maxWidth50vw">
         <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-blue-500 to-teal-500 transform scale-[0.80] rounded-full blur-3xl" />
         <div className="relative shadow-xl myLightPost dark:bg-gray-900 border border-gray-800 dark:text-gray-300 text-slate-700 pb-0 p-4 pt-4 h-full overflow-hidden rounded-2xl flex flex-col justify-end items-start">
@@ -169,10 +169,13 @@ export function SinglePost(props: SocialPost) {
               Explore
             </button> */}
           {/* Meaty part - Meteor effect */}
-          <div className="bg-slate-500 h-px mt-3 opacity-50 w-full"></div>
-          <div className="text-center w-full">
-            <Button onClick={() => handleClickCommentOpen(props)} startIcon={<ModeCommentOutlinedIcon />} variant="text">View Comments</Button>
-          </div>
+          {!props.isNews && <>
+            <div className="bg-slate-500 h-px mt-3 opacity-50 w-full"></div>
+            <div className="text-center w-full">
+              <Button onClick={() => handleClickCommentOpen(props)} startIcon={<ModeCommentOutlinedIcon />} variant="text">View Comments</Button>
+            </div>
+          </>
+          }
           <Meteors number={10} />
         </div>
       </div>
