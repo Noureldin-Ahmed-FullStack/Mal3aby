@@ -1,4 +1,3 @@
-import { MdOutlineCalendarMonth } from "react-icons/md";
 import { useUserContext } from "../../context/UserContext";
 import { useUserTickets } from "../../hooks/FetchCustService"
 import CenteredPage from "../CenteredPage";

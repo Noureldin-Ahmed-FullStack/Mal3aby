@@ -72,7 +72,7 @@ createRoot(document.getElementById('root')!).render(
       {/* <App /> */}
       
       <ToastContainer />
-      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </ClerkProvider>
   // </StrictMode>
