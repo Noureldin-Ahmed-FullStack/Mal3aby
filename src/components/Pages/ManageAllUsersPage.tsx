@@ -64,7 +64,7 @@ export default function ManageAllUsersPage() {
         )
     }
     if (data) {
-        return <div className='container mx-auto pt-28 text-zinc-800 dark:text-zinc-300'>
+        return <div className='container mx-auto pt-7 text-zinc-800 dark:text-zinc-300'>
             <NiceDiv>
                 <h1 className='text-center mb-3'>Manage All Users</h1>
                 <div className="my-5 mb-5">

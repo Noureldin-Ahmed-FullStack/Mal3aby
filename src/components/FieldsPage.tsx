@@ -16,7 +16,7 @@ export default function FieldsPage() {
         )
     }
     return (
-        <div className="flex grow justify-center pt-24 md:pt-4 mb-20">
+        <div className="flex grow justify-center pt-7 md:pt-4 mb-20">
             {data?.field?.length != 0 ? (
                 <>
                     <div className="static md:hidden maxWidth75vw">
@@ -24,7 +24,7 @@ export default function FieldsPage() {
                             <FieldItem _id={item._id} key={item._id} type={item.type} address={item.address} className="my-2" Name={item.title} Icon={item.coverImage} location={item.location} price={item.price} />
                         ))}
                     </div>
-                    <div className="mt-28">
+                    <div className="mt-7">
                         <div className="hidden md:grid md:grid-cols-2 xl:grid-cols-3 gap-4 container">
                             {data?.field?.map((item: response) => (
                                 <FieldItemBox key={item._id} _id={item._id} type={item.type} address={item.address} className="my-2" Name={item.title} Icon={item.coverImage} location={item.location} price={item.price} />

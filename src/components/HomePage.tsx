@@ -5,15 +5,31 @@ import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import { Link } from 'react-router-dom';
 import { useUserContext } from '../context/UserContext';
+import { useAppContext } from '../context/AppContext';
+import { SignInButton } from '@clerk/clerk-react';
+// import WelcomeBack from './ui/WelcomeBack';
 
 export default function HomePage() {
 
-  const { userData} = useUserContext();
+    const { currentDevice } = useAppContext();
+    const { userData } = useUserContext();
     return (
         <div className="flex flex-col grow items-center">
             {/* <Hero /> */}
             <div className="flex flex-col w-full grow items-center">
-                <div className="mt-28">
+                {/* <WelcomeBack /> */}
+                {currentDevice != "Other" && (
+                    userData ? (
+                        <div className="text-zinc-900 dark:text-zinc-100 font-bold mt-5">
+                            Welcome back {userData.name} 👋!
+                        </div>
+                    ) : (
+                        <div className="  font-bold mt-5 flex items-center">
+                            <div className='me-5 !text-zinc-900 dark:!text-zinc-100'>Hello, Guest 👋!</div> <SignInButton />
+                        </div>
+                    )
+                )}
+                <div className="mt-3">
                     <div className="container mx-auto maxWidth75vw">
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-4">
                             <div className="relative flex items-center">

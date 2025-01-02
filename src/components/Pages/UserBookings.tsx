@@ -20,7 +20,7 @@ export default function UserBookings() {
   }
 
   return (
-    <div className='maxWidth75vw mx-auto pt-28 text-zinc-800 dark:text-zinc-300'>
+    <div className='maxWidth75vw mx-auto pt-7 text-zinc-800 dark:text-zinc-300'>
       <NiceDiv>
       <h1 className='text-center mb-3'>Your Bookings</h1>
         <div className='w-full grid gap-4 grid-cols-1 sm:grid-cols-2'>

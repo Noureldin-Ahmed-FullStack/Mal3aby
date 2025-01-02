@@ -27,40 +27,42 @@ export default function TabLayout() {
     const { currentPath } = useAppContext();
 
     return (
-        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-            <BottomNavigation
-                showLabels
-                value={getPathIndex(currentPath)}
-            >
-                <BottomNavigationAction
-                    component={Link}
-                    to='home'
-                    sx={{
-                        "&:focus, &:focus-visible": {
-                            outline: "none", // Remove focus outline
-                            border: "none", // Ensure no border is added
-                        },
-                    }}
-                    label="Home" icon={<HomeOutlinedIcon />} />
-                <BottomNavigationAction
-                    component={Link}
-                    to='tournament'
-                    sx={{
-                        "&:focus, &:focus-visible": {
-                            outline: "none", // Remove focus outline
-                            border: "none", // Ensure no border is added
-                        },
-                    }} label="Tournament" icon={<EmojiEventsOutlinedIcon />} />
-                <BottomNavigationAction
-                    component={Link}
-                    to='favourites'
-                    sx={{
-                        "&:focus, &:focus-visible": {
-                            outline: "none", // Remove focus outline
-                            border: "none", // Ensure no border is added
-                        },
-                    }} label="Favourites" icon={<FavoriteBorderOutlinedIcon />} />
-                {/* <BottomNavigationAction
+        <>
+        <div className='pb-20'></div>
+            <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+                <BottomNavigation
+                    showLabels
+                    value={getPathIndex(currentPath)}
+                >
+                    <BottomNavigationAction
+                        component={Link}
+                        to='home'
+                        sx={{
+                            "&:focus, &:focus-visible": {
+                                outline: "none", // Remove focus outline
+                                border: "none", // Ensure no border is added
+                            },
+                        }}
+                        label="Home" icon={<HomeOutlinedIcon />} />
+                    <BottomNavigationAction
+                        component={Link}
+                        to='tournament'
+                        sx={{
+                            "&:focus, &:focus-visible": {
+                                outline: "none", // Remove focus outline
+                                border: "none", // Ensure no border is added
+                            },
+                        }} label="Tournament" icon={<EmojiEventsOutlinedIcon />} />
+                    <BottomNavigationAction
+                        component={Link}
+                        to='favourites'
+                        sx={{
+                            "&:focus, &:focus-visible": {
+                                outline: "none", // Remove focus outline
+                                border: "none", // Ensure no border is added
+                            },
+                        }} label="Favourites" icon={<FavoriteBorderOutlinedIcon />} />
+                    {/* <BottomNavigationAction
                     component={Button}
                     sx={{
                         "&:focus, &:focus-visible": {
@@ -68,9 +70,10 @@ export default function TabLayout() {
                             border: "none", // Ensure no border is added
                         },
                     }} label="Settings" icon={<DensityMediumOutlinedIcon />} /> */}
-                <SideBar />
-            </BottomNavigation>
-        </Paper>
+                    <SideBar />
+                </BottomNavigation>
+            </Paper>
+        </>
     );
 }
 

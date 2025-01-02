@@ -1,10 +1,10 @@
 .background-text {
   -webkit-text-stroke: 6px #181818;
-  font-size: 30vw;
+  font-size: 12rem;
   overflow: hidden;
   font-weight: bold;
   background: url('https://ssniper.sirv.com/Images/other%20projects/paint.jpg') no-repeat center center;
-  background-size: 60vw;
+  background-size: 100vw;
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
@@ -15,11 +15,11 @@
 
 .background-text-dark {
   -webkit-text-stroke: 6px #f0f0f0;
-  font-size: 30vw;
+  font-size: 12rem;
   overflow: hidden;
   font-weight: bold;
   background: url('https://ssniper.sirv.com/Images/other%20projects/purple.jpg') no-repeat center center;
-  background-size: 60vw;
+  background-size: 100vw;
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;

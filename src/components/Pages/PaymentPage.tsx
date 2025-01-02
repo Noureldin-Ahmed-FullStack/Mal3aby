@@ -27,7 +27,7 @@ export default function PaymentPage() {
     const queryParams = Object.fromEntries(searchParams.entries());
     if (queryParams.success == "true") {
         return (
-            <div className='mt-28 w-11/12 mx-auto'>
+            <div className='mt-7 w-11/12 mx-auto'>
                 <NiceDiv className='px-0'>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
@@ -43,7 +43,7 @@ export default function PaymentPage() {
         );
     } else {
         return (
-            <div className='mt-28 container mx-auto '>
+            <div className='mt-7 container mx-auto '>
                 <NiceDiv>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>

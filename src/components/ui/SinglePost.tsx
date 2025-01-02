@@ -18,6 +18,7 @@ export function SinglePost(props: SocialPost) {
   const { userData } = useUserContext()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [SelectedPost, setSelectedPost] = useState<SocialPost>({});
+  const [PendingDelete, setPendingDelete] = useState(false);
   const BaseURL = import.meta.env.VITE_BASE_URL;
   function formatDateTime(timestamp: string | undefined) {
     if (!timestamp) {
@@ -62,20 +63,21 @@ export function SinglePost(props: SocialPost) {
 
   const handleConfirmAction = async (postID: string | undefined) => {
     // Perform your confirm action here
+    setPendingDelete(true)
     if (!postID) {
       console.log("something went wrong with postID");
       handleCloseDialog();
       return
     }
-    console.log('Confirmed!', postID);
-
     try {
       const response = await axios.delete(BaseURL + "post/" + postID);
       queryClient.refetchQueries({ queryKey: ['SocialPosts'] });
       console.log(response);
     } catch (error) {
       console.log(error);
+      setPendingDelete(false)
     }
+    setPendingDelete(false)
     handleCloseDialog();
   };
 
@@ -127,7 +129,8 @@ export function SinglePost(props: SocialPost) {
         onConfirm={() => handleConfirmAction(props._id)}
         title="Delete post"
         confirmColor='error'
-        confirmText="Delete"
+        isDisabled={PendingDelete}
+        confirmText={PendingDelete? "Loading":"Delete"}
         cancelText="cancel"
       >
         <p>Are you sure you want to Delete this post?</p>
@@ -135,7 +138,7 @@ export function SinglePost(props: SocialPost) {
       {!props.isNews && <CommentsModal postData={SelectedPost} open={CommentOpen} handleClose={handleCommentClose} />}
       <div className=" w-full relative maxWidth50vw">
         <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-blue-500 to-teal-500 transform scale-[0.80] rounded-full blur-3xl" />
-        <div className="relative shadow-xl myLightPost dark:bg-gray-900 border border-gray-800 dark:text-gray-300 text-slate-700 pb-0 p-4 pt-4 h-full overflow-hidden rounded-2xl flex flex-col justify-end items-start">
+        <div className="relative shadow-sm myLightPost dark:bg-gray-900 border border-gray-800 dark:text-gray-300 text-slate-700 pb-0 p-4 pt-4 h-full overflow-hidden rounded-2xl flex flex-col justify-end items-start">
           <div className="flex justify-between mb-2 w-full">
             <div className='flex'>
               <img className="me-2 w-12 h-12 rounded-full" src={props.createdBy?.userPFP} alt="PFP" />
@@ -145,7 +148,7 @@ export function SinglePost(props: SocialPost) {
               </div>
             </div>
             <div>
-              <div className='flex items-start'>{userData?._id == props.createdBy?._id && <div>
+              <div className='flex items-start'>{(userData?._id == props.createdBy?._id || userData?.role == "admin") && <div>
                 <IconButton
                   id="basic-button"
                   sx={{ color: 'inherit' }}

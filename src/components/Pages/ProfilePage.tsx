@@ -58,7 +58,7 @@ export default function ProfilePage() {
     }
   };
   return (
-    <div className='container mx-auto px-3 mt-28'>
+    <div className='container mx-auto px-3 mt-7'>
       <Grid container spacing={2}>
         <Grid size={{ xs: 12, sm: 6, md: 6 }}>
           <NiceDiv className='h-full'>
