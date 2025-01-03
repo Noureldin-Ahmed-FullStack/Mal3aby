@@ -4,15 +4,59 @@ import CenteredPage from "../CenteredPage";
 import { NiceDiv } from "../ui/NiceDiv";
 import LoadingPage from "./LoadingPage";
 import { IoTimeOutline } from "react-icons/io5";
+import DeleteIcon from '@mui/icons-material/Delete';
+import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck';
 import AddTicketButton from "./AddTicketButton";
 import { Button } from "@mui/material";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function CustomerServicePage() {
 
+    const queryClient = useQueryClient();
+    const BaseURL = import.meta.env.VITE_BASE_URL;
     const { userData } = useUserContext();
     const { data, isLoading, isError } = useUserTickets(userData?._id)
     console.log({ data, isLoading, isError });
-
+    const closeTicket = async (id: string) => {
+        try {
+            const res = await axios.put(BaseURL + "tickets/" + id)
+            console.log(res);
+            queryClient.refetchQueries({ queryKey: ['user-tickets/'+userData?._id] });
+        } catch (error) {
+            console.log(error);
+            toast.error("Error occoured closing ticket", {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        }
+    }
+    const deleteTicket = async (id: string) => {
+        try {
+            const res = await axios.delete(BaseURL + "tickets/" + id)
+            queryClient.refetchQueries({ queryKey: ['user-tickets/'+userData?._id] });
+            console.log(res);
+        } catch (error) {
+            console.log(error);
+            toast.error("Error occoured deleting ticket", {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
+        }
+    }
     if (isError) {
         return (
             <CenteredPage>error</CenteredPage>
@@ -60,14 +104,14 @@ export default function CustomerServicePage() {
                                     <div>
                                         <div className='flex items-start'>Problem: <p className="ms-2 whitespace-pre-wrap">{ticketItem?.content}</p></div>
                                         <p className='flex items-center mt-5'><IoTimeOutline className='me-2' />Created At: {ticketItem?.createdAt}</p>
-                                        <div className="flex"><p className="me-2">status: </p>{!ticketItem?.closed ? <p className='text-green-700'>Closed</p> : <p className='text-red-700'>pending</p>}</div>
+                                        <div className="flex"><p className="me-2">status: </p>{ticketItem?.closed ? <p className='text-green-700'>Closed</p> : <p className='text-red-700'>pending</p>}</div>
 
                                     </div>
 
                                 </div>
                                 <div className="mt-2">
-                                    {(userData?._id == ticketItem?.createdBy._id || userData?.role == "admin") && < Button className="!me-3" variant="outlined" color="error">Delete</Button>}
-                                    {userData?.role == "admin" && <Button variant="outlined" color="secondary">close ticket</Button>}
+                                    {(userData?._id == ticketItem?.createdBy._id || userData?.role == "admin") && < Button onClick={()=>deleteTicket(ticketItem?._id)} className="!me-3" variant="outlined" color="error"><DeleteIcon /> Delete</Button>}
+                                    {userData?.role == "admin" && <Button onClick={()=>closeTicket(ticketItem?._id)} variant="outlined" color="secondary"><LibraryAddCheckIcon /> close ticket</Button>}
                                 </div>
                             </NiceDiv>
                         ))}
