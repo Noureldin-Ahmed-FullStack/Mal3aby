@@ -92,7 +92,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onChange }) => {
           className: 'dropzone p-10 border border-dashed border-gray-400 rounded-lg cursor-pointer',
         })}
       >
-        <input {...getInputProps()} type="file" capture="environment" accept="image/*" />
+        <input {...getInputProps()} type="file" accept="image/*" />
         {isDragActive ? (
           <p className="text-gray-700 dark:text-gray-300">Drop Images here...</p>
         ) : (
