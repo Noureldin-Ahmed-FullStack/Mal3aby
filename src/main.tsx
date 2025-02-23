@@ -42,7 +42,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <HomePage /> },
       { path: "/home", element: <HomePage /> },
-      { path: "/Mal3aby", element: <HomePage /> },
+      { path: "/captain-masr", element: <HomePage /> },
       { path: "/field/:fieldID", element: <FieldDetailsPage /> },
       { path: "/soccer", element: <FieldsPage /> },
       { path: "/ticket/:ticketID", element: <div><TicketPage /></div> },
@@ -58,8 +58,8 @@ const router = createBrowserRouter([
       { path: "/news", element: <NewsPage /> },
       { path: "/Profile", element: <><SignedIn><ProfilePage /></SignedIn><SignedOut><LoginFirstPage /></SignedOut></>},
       { path: "/Social", element: <SocialPage /> },
-      { path: "/sign-in", element: <CenteredPage className="mt-20"><SignUp routing='hash' forceRedirectUrl={'/Mal3aby'} /></CenteredPage> },
-      { path: "/sign-up", element: <CenteredPage className="mt-20"><SignIn routing='hash' forceRedirectUrl={'/Mal3aby'} /></CenteredPage> },
+      { path: "/sign-in", element: <CenteredPage className="mt-20"><SignUp routing='hash' forceRedirectUrl={'/captain-masr'} /></CenteredPage> },
+      { path: "/sign-up", element: <CenteredPage className="mt-20"><SignIn routing='hash' forceRedirectUrl={'/captain-masr'} /></CenteredPage> },
       { path: "*", element: <CenteredPage><NotFoundPage /></CenteredPage> },
     ]
   }

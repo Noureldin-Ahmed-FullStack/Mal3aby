@@ -15,6 +15,10 @@ import LoadingPage from "./LoadingPage";
 import { useUserContext } from "../../context/UserContext";
 import axios from "axios";
 import { useQueryClient } from "@tanstack/react-query";
+import OfflineBookingButton from "./OfflineBookingButton";
+import DeleteFieldButton from "./DeleteFieldButton";
+import ErrorPage from "./ErrorPage";
+import FieldEditButton from "./FieldEditButton";
 export default function FieldDetailsPage() {
     const [value, setValue] = useState<number | null>(0);
     const [AverageRating, setAverageRating] = useState<number>(0);
@@ -23,9 +27,16 @@ export default function FieldDetailsPage() {
     const queryClient = useQueryClient();
     const BaseURL = import.meta.env.VITE_BASE_URL;
     const { fieldID } = useParams();
-    const { data } = useFieldDetails(fieldID)
-    var settings = {
-        infinite: data?.Images.length > 1,
+    const { data, isLoading, isError } = useFieldDetails(fieldID)
+    if (isError) {
+        return <CenteredPage>
+            <ErrorPage></ErrorPage>
+        </CenteredPage>
+    }
+    console.log(data);
+
+    const settings = {
+        infinite: data != "error" ? data?.Images.length > 1 : false,
         speed: 500,
         arrows: false,
         slidesToShow: 1,
@@ -48,6 +59,9 @@ export default function FieldDetailsPage() {
         if (!data) {
             return
         }
+        if (data == "error") {
+            return
+        }
         const foundUserIndex = data.ratings.findIndex((rating: rating) => rating.userId === userData?._id);
         setField(data)
 
@@ -63,7 +77,12 @@ export default function FieldDetailsPage() {
             setValue(avgRating)
         }
     }, [data])
-    if (Field && Field != "error") {
+    if (isLoading) {
+        return (
+            <LoadingPage />
+        )
+    }
+    if (Field && !isLoading && Field != "error") {
         return (
             <div className="grow flex flex-col">
                 <div className="hidden md:block">
@@ -82,7 +101,10 @@ export default function FieldDetailsPage() {
                             </Grid>
                             <Grid size={8}>
                                 <div className="flex justify-between">
-                                    <p className="text-4xl">{Field.title}</p>
+                                    <p className="text-4xl">{Field.title}
+                                    {(userData && (userData?.role == 'admin' || Field.ownedBy == userData?._id)) && <FieldEditButton FieldData={Field} userData={userData} />}
+
+                                    </p>
                                     <div className="flex items-center">
                                         <p className="opacity-55 mt-0 text-sm text-end me-2">{AverageRating + " out of 5 | " + data.ratings.length + " reviews"}</p>
                                         <Rating
@@ -102,22 +124,30 @@ export default function FieldDetailsPage() {
                                     <p className="">Price per hour:</p>
                                     <p>{Field.price}Egp.</p>
                                 </div>
+
+                                <div className="flex justify-between mt-3">
+                                    <p className="text-zinc-500">The full ticket price is {Field.price + 15}Egp., you pay 15 egp online to book and {Field.price}Egp. cash or via insta-pay to the owner when you arrive.</p>
+                                </div>
                                 <div className="flex justify-start mt-3">
                                     <p>{Field.note}</p>
                                 </div>
-                                <div className="mb-4">
-                                    <BookingButton _id={Field._id} title={Field.title} startTime={Field.startTime} price={Field.price} owner={Field.ownedBy} hourCount={Field.hourCount} />
-                                </div>
+                                <div className="mb-4">{
+                                    (userData?.role == 'admin' || Field.ownedBy == userData?._id) ? <OfflineBookingButton _id={Field._id} title={Field.title} startTime={Field.startTime} price={Field.price} owner={Field.ownedBy} hourCount={Field.hourCount} /> : <BookingButton _id={Field._id} title={Field.title} startTime={Field.startTime} price={Field.price} owner={Field.ownedBy} hourCount={Field.hourCount} />
+                                }</div>
                                 <p className="mb-2">Tags:</p>
                                 {Field.tags.map((tag, index) => (
                                     <Chip clickable key={index} className="!me-2" color="warning" label={tag} />
                                 ))}
                             </Grid>
+
+                            {(userData && (userData?.role == 'admin' || Field.ownedBy == userData?._id)) && <div className="w-full">
+                                <DeleteFieldButton FieldData={Field} userdata={userData} />
+                            </div>}
                         </Grid>
 
                     </CenteredPage>
                 </div>
-                <div className="md:hidden grow flex flex-col text-zinc-900 dark:text-zinc-200">
+                <div className="md:hidden mt-sub-6rem grow flex flex-col text-zinc-900 dark:text-zinc-200">
 
                     <div className="carousel-container">
                         <Slider {...settings}>
@@ -132,7 +162,10 @@ export default function FieldDetailsPage() {
 
                     <CardBody className="w-full grow transition-all rounded-none ease-in bg-zinc-100 bg-opacity-50 dark:bg-opacity-30 dark:bg-black relative dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:border-white/[0.2] border-black/[0.1] p-6 border ">
                         <div className="flex justify-between">
-                            <p className="text-4xl">{Field.title}</p>
+                            <p className="text-4xl">{Field.title}
+                                {(userData && (userData?.role == 'admin' || Field.ownedBy == userData?._id)) && <FieldEditButton FieldData={Field} userData={userData} />}
+
+                            </p>
                             <div className="flex flex-col-reverse sm:flex-row items-center">
                                 <p className="opacity-55 mt-0 text-sm text-end me-2">{AverageRating + " out of 5 | " + data.ratings.length + " reviews"}</p>
                                 <Rating
@@ -155,20 +188,29 @@ export default function FieldDetailsPage() {
                         <div className="flex justify-start mt-3">
                             <p>{Field.note}</p>
                         </div>
-                        <div>
-                            <BookingButton _id={Field._id} title={Field.title} startTime={Field.startTime} price={Field.price} owner={Field.ownedBy} hourCount={Field.hourCount} />
+                        <div className="flex justify-between mt-3">
+                            <p className="text-zinc-500">The full ticket price is {Field.price}Egp., you pay 15 egp online to book and the rest you pay cash or via insta-pay to the owner when you arrive.</p>
                         </div>
+                        <div>
+                            {
+                                (userData?.role == 'admin' || Field.ownedBy == userData?._id) ? <OfflineBookingButton _id={Field._id} title={Field.title} startTime={Field.startTime} price={Field.price} owner={Field.ownedBy} hourCount={Field.hourCount} /> : <BookingButton _id={Field._id} title={Field.title} startTime={Field.startTime} price={Field.price} owner={Field.ownedBy} hourCount={Field.hourCount} />
+                            }
+                        </div>
+                        {(userData && (userData?.role == 'admin' || Field.ownedBy == userData?._id)) && <DeleteFieldButton FieldData={Field} userdata={userData} />}
                     </CardBody>
                 </div>
             </div>)
     } else if (Field == "error") {
         return (
             <CenteredPage>
-                <h4 className="text-7xl mb-5 text-center text-red-700 dark:text-red-800 font-medium agu-display">error 404: This Item doesnt exist</h4>
-            </CenteredPage>)
+                <h4 className="text-7xl mb-5 text-center text-red-700 dark:text-red-800 font-medium agu-display">error 404: This Field doesnt exist</h4>
+            </CenteredPage>
+        )
     } else {
         return (
-            <LoadingPage />
+            <CenteredPage>
+                <h4 className="text-7xl mb-5 text-center text-red-700 dark:text-red-800 font-medium agu-display">error 404: This Field doesnt exist</h4>
+            </CenteredPage>
         )
     }
 

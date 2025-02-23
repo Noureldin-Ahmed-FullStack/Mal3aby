@@ -84,6 +84,14 @@ export default function SideBar() {
                             <ListItemText primary={"social"} />
                         </ListItemButton>
                     </ListItem>
+                    <ListItem className='text-inherit' component={Link} to="news" disablePadding>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <NewspaperIcon />
+                            </ListItemIcon>
+                            <ListItemText primary={"news"} />
+                        </ListItemButton>
+                    </ListItem>
             </List>
             <Divider />
             <List>

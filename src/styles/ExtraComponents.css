@@ -116,3 +116,6 @@
     height: 100%;
     object-fit: cover; /* Preserve aspect ratio and prevent cropping */
   }
+  .mt-sub-6rem{
+    margin-top: -6rem;
+  }

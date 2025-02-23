@@ -135,7 +135,7 @@ export default function AddPost() {
                 keepMounted
                 maxWidth="md"
                 onClose={handleClose}
-                aria-describedby="alert-dialog-slide-description"
+                aria-describedby="dialog-for-adding-post"
                 PaperProps={{
                     className: '!bg-slate-50 dark:!bg-slate-800 dark:!text-slate-50',
                     component: 'form',
@@ -168,7 +168,7 @@ export default function AddPost() {
                 <DialogContent>
                     <DialogContentText
                         component={"div"}
-                        id="alert-dialog-slide-description"
+                        id="dialog-for-adding-post"
                     >
                         <div className="flex flex-col pt-3">
                             <TextField

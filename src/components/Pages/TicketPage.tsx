@@ -34,7 +34,7 @@ export default function TicketPage(props: props) {
     const { ticketID } = useParams();
     const ID = ticketPropID || ticketID
     console.log(ticketPropID, ticketID, ID);
-    const url = `https://mal3aby.vercel.app/ticket/${ID}`
+    const url = `https://captain-masr.vercel.app/ticket/${ID}`
 
 
     const { data, isLoading } = useBookingDetails(ID)
@@ -67,7 +67,7 @@ export default function TicketPage(props: props) {
         return (
             <div className='w-full'>
                 <QRCodeSVG className='mx-auto' value={url} size={200} bgColor="#ffffff" fgColor="#000000" />
-                <p className='text-center opacity-60 my-3'><a className='text-inherit hover:text-inherit' href={`https://mal3aby.vercel.app/ticket/${data._id}`}>Ticket No. : {data._id}</a></p>
+                <p className='text-center opacity-60 my-3'><a className='text-inherit hover:text-inherit' href={`https://captain-masr.vercel.app/ticket/${data._id}`}>Ticket No. : {data._id}</a></p>
                 <div className='px-4 py-3 bg-blue-500 dark:bg-green-400 dark:bg-opacity-40 w-10/12 mx-auto rounded-2xl text-zinc-100 text-lg'>
                     <p className='flex items-center justify-center'><MdOutlineCalendarMonth className='me-3' />{data.date}</p>
                     <div className='flex'>

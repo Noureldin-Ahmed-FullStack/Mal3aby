@@ -145,13 +145,23 @@ export default function AddTicketButton() {
         setImages(files)
         console.log('Selected files:', files);
     };
+    const validatePhone = (value: string) => {
+        const phoneRegex = /^01[0-9]{9}$/; // Adjust regex as needed
+        return phoneRegex.test(value);
+    };
+    const [phone, setPhone] = useState("");
+    const [phoneError, setPhoneError] = useState(false);
+    const handlephoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+        setPhone(value);
+        setPhoneError(!validatePhone(value)); // Show error if invalid
+    };
     return (
         <>
-
             <CustomDialog
                 open={isDialogOpen}
                 onClose={handleCloseDialog}
-                isDisabled={pendingRequest}
+                isDisabled={pendingRequest || phoneError || !phone}
                 onConfirm={() => handleConfirmAction()}
                 title="Create Customer service Ticket"
                 confirmColor='primary'
@@ -164,7 +174,10 @@ export default function AddTicketButton() {
                 <form className='mt-5' ref={formRef}>
                     <Grid container spacing={2} rowSpacing={1}>
                         <Grid size={6}><TextField error={emptyIndicesState.includes(0)} required fullWidth id="title" name='title' label="Title" variant="outlined" /></Grid>
-                        <Grid size={6}><TextField error={emptyIndicesState.includes(1)} required fullWidth id="phone" name='phone' label="phone number" variant="outlined" /></Grid>
+                        <Grid size={6}><TextField error={emptyIndicesState.includes(1) || phoneError} type='tel'
+                            value={phone}
+                            onChange={handlephoneChange}
+                            helperText={phoneError ? "Enter a valid phone number (11 digits and starts with 01)" : ""} required fullWidth id="phone" name='phone' label={"phone number"} variant="outlined" /></Grid>
                         <Grid size={12}>
                             <TextField
                                 error={emptyIndicesState.includes(2)}

@@ -11,6 +11,7 @@ import { Button } from "@mui/material";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
+import ImageGallery from "../ui/ImageDisplay";
 
 export default function CustomerServicePage() {
 
@@ -23,7 +24,7 @@ export default function CustomerServicePage() {
         try {
             const res = await axios.put(BaseURL + "tickets/" + id)
             console.log(res);
-            queryClient.refetchQueries({ queryKey: ['user-tickets/'+userData?._id] });
+            queryClient.refetchQueries({ queryKey: ['user-tickets/' + userData?._id] });
         } catch (error) {
             console.log(error);
             toast.error("Error occoured closing ticket", {
@@ -41,7 +42,7 @@ export default function CustomerServicePage() {
     const deleteTicket = async (id: string) => {
         try {
             const res = await axios.delete(BaseURL + "tickets/" + id)
-            queryClient.refetchQueries({ queryKey: ['user-tickets/'+userData?._id] });
+            queryClient.refetchQueries({ queryKey: ['user-tickets/' + userData?._id] });
             console.log(res);
         } catch (error) {
             console.log(error);
@@ -101,6 +102,9 @@ export default function CustomerServicePage() {
                                     </div>
                                 </div>
                                 <div className='flex justify-between'>
+                                    {ticketItem.Images && <ImageGallery imageUrls={ticketItem.Images} />}
+                                </div>
+                                <div className='flex justify-between'>
                                     <div>
                                         <div className='flex items-start'>Problem: <p className="ms-2 whitespace-pre-wrap">{ticketItem?.content}</p></div>
                                         <p className='flex items-center mt-5'><IoTimeOutline className='me-2' />Created At: {ticketItem?.createdAt}</p>
@@ -110,8 +114,8 @@ export default function CustomerServicePage() {
 
                                 </div>
                                 <div className="mt-2">
-                                    {(userData?._id == ticketItem?.createdBy._id || userData?.role == "admin") && < Button onClick={()=>deleteTicket(ticketItem?._id)} className="!me-3" variant="outlined" color="error"><DeleteIcon /> Delete</Button>}
-                                    {userData?.role == "admin" && <Button onClick={()=>closeTicket(ticketItem?._id)} variant="outlined" color="secondary"><LibraryAddCheckIcon /> close ticket</Button>}
+                                    {(userData?._id == ticketItem?.createdBy._id || userData?.role == "admin") && < Button onClick={() => deleteTicket(ticketItem?._id)} className="!me-3" variant="outlined" color="error"><DeleteIcon /> Delete</Button>}
+                                    {userData?.role == "admin" && <Button onClick={() => closeTicket(ticketItem?._id)} variant="outlined" color="secondary"><LibraryAddCheckIcon /> close ticket</Button>}
                                 </div>
                             </NiceDiv>
                         ))}

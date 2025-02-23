@@ -3,13 +3,19 @@ import { useRef, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import Grid from '@mui/material/Grid2';
 import CustomDialog from '../ui/ModalWithChildren';
+import EditIcon from '@mui/icons-material/Edit';
 import axios from 'axios';
-import { Alert, Chip, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
+import { Alert, Chip, IconButton, MenuItem, Select, SelectChangeEvent, TextField, Tooltip } from '@mui/material';
 import FileUpload from '../ui/customFileUpload';
 import { PlaceholdersAndVanishInput } from '../ui/placeholders-and-vanish-input';
 import { toast } from 'react-toastify';
+import { response, userType } from '../../types';
 
-export default function AddFieldButton() {
+interface props {
+    FieldData: response
+    userData: userType
+}
+export default function FieldEditButton(props: props) {
     const [pendingRequest, setPendingRequest] = useState(false)
     const [validationErrors, setValidationErrors] = useState<string[]>([])
     const [emptyIndicesState, setEmptyIndicesState] = useState<number[]>([])
@@ -18,8 +24,8 @@ export default function AddFieldButton() {
             .map((variable, index) => (variable === "" ? index : -1))
             .filter(index => index !== -1);
     }
-    const [fieldType, setFieldType] = useState('select_field_type');
-    const [StartTime, setStartTime] = useState('select_start_time');
+    const [fieldType, setFieldType] = useState(props.FieldData.type);
+    const [StartTime, setStartTime] = useState(props.FieldData.startTime as string);
     const handleFieldTypeChange = (event: SelectChangeEvent) => {
         setFieldType(event.target.value as string);
     };
@@ -42,7 +48,7 @@ export default function AddFieldButton() {
         setChipData((chips) => [...chips, firstInputValue]);
         console.log(firstInputValue);
     };
-    const [chipData, setChipData] = useState<string[]>([]);
+    const [chipData, setChipData] = useState<string[]>(props.FieldData.tags);
     const handleChipDelete = (chipToDelete: string) => () => {
         console.log(chipToDelete);
         const data = chipData.filter((chip) => chip !== chipToDelete)
@@ -55,13 +61,18 @@ export default function AddFieldButton() {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
     const handleConfirmAction = async () => {
         if (formRef.current) {
+
             var formData = new FormData(formRef.current);
+            for (let [key, value] of formData.entries()) {
+                console.log(key, value);
+            }
             formData.append("tags", JSON.stringify(chipData))
             Array.from(Images).forEach((image) => {
                 formData.append('Images', image);  // Append each image under the 'Images' key
             });
             const formJson = Object.fromEntries((formData as any).entries());
             console.log(formJson);
+            console.log(formData);
             const strings = [formJson.title, formJson.ownedBy, formJson.location, formJson.price, formJson.address, formJson.hourCount, formJson.ownerPhone]
             const emptyIndices = findEmptyStringIndices(strings);
             setEmptyIndicesState(findEmptyStringIndices(strings))
@@ -128,7 +139,6 @@ export default function AddFieldButton() {
             setValidationErrors([])
             setEmptyIndicesState([])
         } else {
-            console.log("an error has occured");
             toast.error("an error has occured", {
                 position: "top-center",
                 autoClose: 5000,
@@ -143,8 +153,8 @@ export default function AddFieldButton() {
         }
         setPendingRequest(true)
         try {
-            const response = await axios.post(BaseURL + "field", formData);
-            queryClient.refetchQueries({ queryKey: ['fields'] });
+            const response = await axios.put(BaseURL + "field/" + props.FieldData._id + "/" + props.userData._id, formData);
+            queryClient.refetchQueries({ queryKey: ['FieldDetails' + props.FieldData._id] });
             console.log(response);
             setPendingRequest(false)
         } catch (error) {
@@ -164,7 +174,7 @@ export default function AddFieldButton() {
             return
         }
 
-        toast.success("Field added successfully", {
+        toast.success("Field Data Changed successfully!", {
             position: "top-center",
             autoClose: 5000,
             hideProgressBar: false,
@@ -192,7 +202,7 @@ export default function AddFieldButton() {
         const phoneRegex = /^01[0-9]{9}$/; // Adjust regex as needed
         return phoneRegex.test(value);
     };
-    const [phone, setPhone] = useState("");
+    const [phone, setPhone] = useState(props.FieldData.ownerPhone || "");
     const [phoneError, setPhoneError] = useState(false);
     const handlephoneChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
@@ -201,13 +211,12 @@ export default function AddFieldButton() {
     };
     return (
         <>
-
             <CustomDialog
                 open={isDialogOpen}
                 onClose={handleCloseDialog}
                 isDisabled={pendingRequest || fieldType == "select_field_type" || StartTime == "select_start_time"}
                 onConfirm={() => handleConfirmAction()}
-                title="Add Field"
+                title="Edit Field info"
                 confirmColor='primary'
                 confirmText={pendingRequest ? "Loading" : "Confirm"}
                 cancelText="cancel"
@@ -217,11 +226,11 @@ export default function AddFieldButton() {
                 ))}
                 <form className='mt-5' ref={formRef}>
                     <Grid container spacing={2} rowSpacing={1}>
-                        <Grid size={6}><TextField error={emptyIndicesState.includes(0)} required fullWidth id="title" name='title' label="Title" variant="outlined" /></Grid>
-                        <Grid size={6}><TextField error={emptyIndicesState.includes(1)} required fullWidth id="ownedBy" name='ownedBy' label="Owned by" variant="outlined" /></Grid>
-                        <Grid size={6}><TextField error={emptyIndicesState.includes(3)} required fullWidth id="price" name='price' label="price" variant="outlined" type='number' inputProps={{ min: 0 }} /></Grid>
-                        <Grid size={6}><TextField error={emptyIndicesState.includes(4)} required fullWidth id="address" name='address' label="address" variant="outlined" /></Grid>
-                        <Grid size={12}><TextField error={emptyIndicesState.includes(2)} required fullWidth id="location" name='location' label="Google maps Location" variant="outlined" /></Grid>
+                        <Grid size={6}><TextField defaultValue={props.FieldData.title} error={emptyIndicesState.includes(0)} required fullWidth id="title" name='title' label="Title" variant="outlined" /></Grid>
+                        <Grid size={6}><TextField defaultValue={props.FieldData.ownedBy} error={emptyIndicesState.includes(1)} required fullWidth id="ownedBy" name='ownedBy' label="Owned by" variant="outlined" /></Grid>
+                        <Grid size={6}><TextField defaultValue={props.FieldData.price} error={emptyIndicesState.includes(3)} required fullWidth id="price" name='price' label="price" variant="outlined" type='number' inputProps={{ min: 0 }} /></Grid>
+                        <Grid size={6}><TextField defaultValue={props.FieldData.address} error={emptyIndicesState.includes(4)} required fullWidth id="address" name='address' label="address" variant="outlined" /></Grid>
+                        <Grid size={12}><TextField defaultValue={props.FieldData.location} error={emptyIndicesState.includes(2)} required fullWidth id="location" name='location' label="Google maps Location" variant="outlined" /></Grid>
                         <Grid size={6}>
                             <Select
                                 required
@@ -245,7 +254,7 @@ export default function AddFieldButton() {
                         <Grid size={6}><TextField error={emptyIndicesState.includes(6) || phoneError} type='tel'
                             value={phone}
                             onChange={handlephoneChange}
-                            helperText={phoneError ? "Enter a valid phone number (11 digits and starts with 01)" : ""} required fullWidth id="ownerPhone" name='ownerPhone' label="whatsapp number" variant="outlined" /></Grid>
+                            helperText={phoneError ? "Enter a valid phone number (11 digits and starts with 01)" : ""} inputProps={{ min: 0, max: 24 }} required fullWidth id="ownerPhone" name='ownerPhone' label="whatsapp number" variant="outlined" /></Grid>
                         <Grid size={6}>
                             <Select
                                 required
@@ -286,16 +295,17 @@ export default function AddFieldButton() {
                                 <MenuItem value={'11 am'}>11 am</MenuItem>
                             </Select>
                         </Grid>
-                        <Grid size={6}><TextField error={emptyIndicesState.includes(5)} type='number' inputProps={{ min: 0, max: 24 }} required fullWidth id="hourCount" name='hourCount' label="Working Hours" variant="outlined" /></Grid>
+                        <Grid size={6}><TextField defaultValue={props.FieldData.hourCount} error={emptyIndicesState.includes(5)} type='number' inputProps={{ min: 0, max: 24 }} required fullWidth id="hourCount" name='hourCount' label="Working Hours" variant="outlined" /></Grid>
 
                         <Grid size={12}>
                             <TextField
                                 id="note"
                                 name="note"
                                 label="notes"
+                                defaultValue={props.FieldData.note}
                                 placeholder={"example: Ball renting costs 25 EGP"}
                                 rows={4}
-                                className="w-full  custom-textfield"
+                                className="w-full custom-textfield"
                                 multiline
                                 InputProps={{
                                     className: 'dark:text-slate-50 dark:placeholder:text-gray-400 ', // Text color and placeholder color
@@ -310,6 +320,9 @@ export default function AddFieldButton() {
 
 
                     <div className="mt-5">
+                        <div className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span className="font-medium">You are required to reupload Images for Field when Editing or Field Images are lost </span>
+                        </div>
                         <FileUpload onChange={handleFileChange} />
                     </div>
                 </form>
@@ -330,8 +343,12 @@ export default function AddFieldButton() {
                     />
                 </div>
             </CustomDialog>
-            <button onClick={handleOpenDialog} className="w-full mt-5 px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold">Add field</button>
-
+            <Tooltip title="Edit Field info" followCursor>
+                <IconButton onClick={handleOpenDialog} aria-label="delete" color="info">
+                    <EditIcon />
+                </IconButton>
+            </Tooltip>
         </>
     )
+
 }

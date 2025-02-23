@@ -13,7 +13,7 @@ const getPathIndex = (path: string | null) => {
             return 0
         case "/home":
             return 0
-        case "/Mal3aby":
+        case "/captain-masr":
             return 0
         case "/tournament":
             return 1

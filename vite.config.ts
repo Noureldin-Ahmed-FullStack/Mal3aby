@@ -9,8 +9,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
       manifest: {
-        name: 'Vite PWA Project',
-        short_name: 'Vite PWA Project',
+        name: 'Captain Masr',
+        short_name: 'Captain Masr',
         theme_color: '#ffffff',
         icons: [
             {

@@ -1,23 +1,25 @@
 export interface SocialPost {
     content?: string
     comments?: Comments[]
-    createdBy?: UserData
+    createdBy?: userType
     createdAt?: string
     role?: string
     isNews?: boolean
     Images?: string[]
     _id?: string
 }
-export interface UserData {
-    email: string
-    _id: string
-    name: string
-    userPFP: string
-    role: 'user' | 'admin' | 'dev' | 'teamlead'
-}
+export interface userType {
+    name: string,
+    _id: string,
+    userPFP: string,
+    email: string,
+    About?: string
+    role: 'user' | 'admin' | 'owner' | 'dev'
+    wallet: number
+  }
 export interface Comments {
     comment: string
-    userID: UserData
+    userID: userType
     createdAt: string
 }
 export interface rating {
@@ -35,6 +37,7 @@ export interface response {
     ratings: [rating]
     price: number
     ownedBy: string
+    ownerPhone?: string
     type: string
     title: string
     _id: string

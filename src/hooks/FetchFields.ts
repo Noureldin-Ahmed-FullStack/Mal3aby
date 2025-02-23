@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 const BaseURL = import.meta.env.VITE_BASE_URL;
-export const fetchField = async (fieldType: string) => {
+export const fetchField = async (fieldType: string, title?: string, address?: string) => {
     if (fieldType != null || fieldType != undefined) {
-        const response = await axios.get(BaseURL + "field" + fieldType);
+        const response = await axios.get(BaseURL + "field" + fieldType + `?title=${title}&address=${address}`);
         return response.data;  // Assuming the response matches the FieldResponse structure
     } else {
         return []
@@ -53,10 +53,10 @@ const fetchFieldDetails = async (fieldID: string | undefined) => {
 
 
 };
-export const useField = (fieldType: string) => {
+export const useField = (fieldType: string, title?: string | undefined, address?: string | undefined) => {
     return useQuery({
         queryKey: ['Field' + fieldType, fieldType],
-        queryFn: () => fetchField(fieldType),
+        queryFn: () => fetchField(fieldType,title,address),
         enabled: !!fieldType,
         staleTime: 5 * 60 * 1000,
         refetchOnWindowFocus: false,
