@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import FieldItemBox from '../ui/FieldItemBox';
 import FieldItem from "../ui/FieldItem";
 import LoadingPage from './LoadingPage';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   userID: string;
@@ -16,6 +17,9 @@ export default function FieldsOfUser({ userID }: Props) {
   const { data, isLoading } = useFieldOfUser(userID);
   const [fields, setFields] = useState<response[]>([]);
 
+    const { t } = useTranslation("global");
+
+    const extrasText: string[] = t('extras', { returnObjects: true }) as string[];
   // Update fields when data changes
   useEffect(() => {
     console.log(data);
@@ -76,11 +80,11 @@ export default function FieldsOfUser({ userID }: Props) {
   ) : (
     <CenteredPage>
       <h4 className="text-6xl mb-5 text-center text-orange-700 dark:text-zinc-200 font-medium agu-display">
-        You have no Fields
+      {extrasText[4]}
       </h4>
       <Link to="/">
         <p className="underline underline-offset-4 text-3xl mb-5 text-center text-blue-600 text-opacity-70 font-medium">
-          Browse <KeyboardTabIcon />
+        {extrasText[3]} <KeyboardTabIcon />
         </p>
       </Link>
     </CenteredPage>

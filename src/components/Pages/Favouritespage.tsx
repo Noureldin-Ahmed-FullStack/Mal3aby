@@ -7,11 +7,15 @@ import { Link } from "react-router-dom";
 import { useUserFavsContext } from "../../context/UserContext";
 import { response } from "../../types";
 import LoadingPage from "./LoadingPage";
+import { useTranslation } from "react-i18next";
 interface FavouritesPageProps {
     className?: string; // Optional className prop
 }
 export default function Favouritespage({ className }: FavouritesPageProps) {
     // const { userData } = useUserContext()
+    const { t } = useTranslation("global");
+
+    const extrasText: string[] = t('extras', { returnObjects: true }) as string[];
     const { favsList, favsLoading } = useUserFavsContext()
     // console.log(data?.items)
     if (favsLoading) {
@@ -20,7 +24,7 @@ export default function Favouritespage({ className }: FavouritesPageProps) {
         )
     }
     return (
-        <div className={"flex mx-auto grow justify-center md:pt-4 maxWidth75vw " +className}>
+        <div className={"flex mx-auto grow justify-center md:pt-4 maxWidth75vw " + className}>
             {favsList?.length != 0 ? (
                 <>
                     <div className="static md:hidden">
@@ -35,8 +39,8 @@ export default function Favouritespage({ className }: FavouritesPageProps) {
                     </div>
                 </>) : (
                 <CenteredPage className="">
-                    <h4 className="text-6xl mb-5 text-center text-orange-700 dark:text-zinc-200 font-medium agu-display">You have no favourites</h4>
-                    <Link to="/"><p className="underline underline-offset-4 text-3xl mb-5 text-center text-blue-600 text-opacity-70 font-medium">Browse <KeyboardTabIcon /></p></Link>
+                    <h4 className="text-6xl mb-5 text-center text-orange-700 dark:text-zinc-200 font-medium agu-display">{extrasText[2]}</h4>
+                    <Link to="/"><p className="underline underline-offset-4 text-3xl mb-5 text-center text-blue-600 text-opacity-70 font-medium">{extrasText[3]}<KeyboardTabIcon /></p></Link>
                 </CenteredPage>
             )}
 

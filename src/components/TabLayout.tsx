@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import SideBar from './ui/SideBar';
 import { useAppContext } from '../context/AppContext';
+import { useTranslation } from 'react-i18next';
 const getPathIndex = (path: string | null) => {
     switch (path) {
         case "/":
@@ -26,6 +27,8 @@ const getPathIndex = (path: string | null) => {
 export default function TabLayout() {
     const { currentPath } = useAppContext();
 
+    const { t } = useTranslation("global");
+    const navText: string[] = t('nav', { returnObjects: true }) as string[];
     return (
         <>
         <div className='pb-20'></div>
@@ -43,7 +46,7 @@ export default function TabLayout() {
                                 border: "none", // Ensure no border is added
                             },
                         }}
-                        label="Home" icon={<HomeOutlinedIcon />} />
+                        label={navText[0]} icon={<HomeOutlinedIcon />} />
                     <BottomNavigationAction
                         component={Link}
                         to='tournament'
@@ -52,7 +55,7 @@ export default function TabLayout() {
                                 outline: "none", // Remove focus outline
                                 border: "none", // Ensure no border is added
                             },
-                        }} label="Tournament" icon={<EmojiEventsOutlinedIcon />} />
+                        }} label={navText[1]} icon={<EmojiEventsOutlinedIcon />} />
                     <BottomNavigationAction
                         component={Link}
                         to='favourites'
@@ -61,7 +64,7 @@ export default function TabLayout() {
                                 outline: "none", // Remove focus outline
                                 border: "none", // Ensure no border is added
                             },
-                        }} label="Favourites" icon={<FavoriteBorderOutlinedIcon />} />
+                        }} label={navText[2]} icon={<FavoriteBorderOutlinedIcon />} />
                     {/* <BottomNavigationAction
                     component={Button}
                     sx={{

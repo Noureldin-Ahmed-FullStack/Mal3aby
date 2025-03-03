@@ -10,6 +10,7 @@ import TabLayout from "./components/TabLayout";
 import { Box, createTheme, ThemeProvider } from "@mui/material";
 import { useThemeStore } from "./context/ThemeContext";
 import { useFavs } from "./hooks/FetchFields";
+import { useTranslation } from "react-i18next";
 const detectDevice = () => {
   const userAgent = navigator.userAgent.toLowerCase();
   if (/android/.test(userAgent)) {
@@ -46,9 +47,11 @@ function App() {
   const { isLoaded, isSignedIn, user } = useUser();
   const { setcurrentDevice, currentDevice, setcurrentPath } = useAppContext();
 
+  const { t } = useTranslation("global");
+  const navText: string[] = t('nav', { returnObjects: true }) as string[];
   const ref = useRef<HTMLDivElement>(null);
   const navbarItems = [
-    { name: 'Home', link: 'home' }, { name: 'favourites', link: 'favourites' }, { name: 'social', link: 'social' }, { name: 'News', link: 'News' }, { name: 'Profile', link: 'Profile' }
+    { name: navText[0], link: 'home' }, { name: navText[1], link: 'favourites' }, { name: navText[2], link: 'social' }, { name: navText[3], link: 'News' }, { name: navText[4], link: 'Profile' }
   ]
   const darkTheme = createTheme({
     palette: {

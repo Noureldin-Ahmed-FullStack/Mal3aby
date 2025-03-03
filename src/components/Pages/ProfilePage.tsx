@@ -44,9 +44,9 @@ export default function ProfilePage() {
       case "owner":
         return <div className='flex flex-col'>
           <p>Owner Content</p>
-          <div className="border mt-2 border-green-400 rounded-b bg-green-100 px-4 py-3 text-green-700">
+          {/* <div className="border mt-2 border-green-400 rounded-b bg-green-100 px-4 py-3 text-green-700">
           <p>Wallet: {userData?.wallet}Egp.</p>
-          </div>
+          </div> */}
           
           <Link to={"/myBookings"} className='w-full mt-5 px-4 py-4 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold hover:text-white'>manage Bookings</Link>
         </div>;

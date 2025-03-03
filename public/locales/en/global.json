@@ -1,0 +1,36 @@
+{
+    "nav": [
+        "Home",
+        "Favourites",
+        "Social",
+        "News",
+        "Profile"
+    ],
+    "sidebar": [
+        "Profile",
+        "Customer Service",
+        "Bookings",
+        "Social",
+        "News",
+        "Change Theme",
+        "Change Language",
+        "Settings"
+    ],
+    "homepage": [
+        "welcome back ",
+        "Hello, Guest ",
+        "Soccer fields",
+        "Paddle fields",
+        "Pool Billiards ",
+        "Swimming Pools",
+        "Bookings",
+        "Manage All Users"
+    ],
+    "extras": [
+        "Page under Construction",
+        "This Service will be ready soon!",
+        "You have no favourites",
+        "browse",
+        "You have no Fields"
+    ]
+}
