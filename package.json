@@ -4,7 +4,7 @@
   "version": "0.4.0",
   "type": "module",
   "scripts": {
-    "generate-pwa-assets": "pwa-assets-generator --preset minimal public/logo.svg",
+    "generate-pwa-assets": "pwa-assets-generator --preset minimal public/LOGO.png",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
