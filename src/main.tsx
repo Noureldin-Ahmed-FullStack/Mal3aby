@@ -58,8 +58,8 @@ const router = createBrowserRouter([
       { path: "/news", element: <NewsPage /> },
       { path: "/Profile", element: <><SignedIn><ProfilePage /></SignedIn><SignedOut><LoginFirstPage /></SignedOut></>},
       { path: "/Social", element: <SocialPage /> },
-      { path: "/sign-in", element: <CenteredPage className="mt-20"><SignUp routing='hash' forceRedirectUrl={'/captain-masr'} /></CenteredPage> },
-      { path: "/sign-up", element: <CenteredPage className="mt-20"><SignIn routing='hash' forceRedirectUrl={'/captain-masr'} /></CenteredPage> },
+      { path: "/sign-in", element: <CenteredPage className="mt-20"><SignIn routing='hash' forceRedirectUrl={'/captain-masr'} /></CenteredPage> },
+      { path: "/sign-up", element: <CenteredPage className="mt-20"><SignUp routing='hash' forceRedirectUrl={'/captain-masr'} /></CenteredPage> },
       { path: "*", element: <CenteredPage><NotFoundPage /></CenteredPage> },
     ]
   }
