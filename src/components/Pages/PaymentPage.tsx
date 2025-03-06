@@ -26,6 +26,8 @@ export default function PaymentPage() {
     // Convert all query parameters to an object
     const queryParams = Object.fromEntries(searchParams.entries());
     if (queryParams.success == "true") {
+        console.log(queryParams);
+        
         return (
             <div className='mt-7 w-11/12 mx-auto'>
                 <NiceDiv className='px-0'>

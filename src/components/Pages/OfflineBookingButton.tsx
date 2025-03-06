@@ -1,10 +1,11 @@
 import React from 'react'
 import { useState } from 'react';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+// import ToggleButton from '@mui/material/ToggleButton';
+// import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import Grid from '@mui/material/Grid2';
 import CustomDialog from '../ui/ModalWithChildren';
 import axios, { AxiosError } from 'axios';
-import { Button, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { Button, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import { useUserContext } from '../../context/UserContext';
 import { toast } from 'react-toastify';
 import { isTooLate } from '../../hooks/extrafunctions';
@@ -25,6 +26,13 @@ export default function OfflineBookingButton(FieldData: FieldDataType) {
     const [TimeSlot, setTimeSlot] = useState('default');
     const { data, isLoading, isError } = useAvailability(FieldData._id, ChosenDate);
 
+    const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const rawDate = event.target.value; // YYYY-MM-DD format from input
+        const formattedDate = rawDate.split("-").reverse().join("/"); // Convert to DD/MM/YYYY
+        console.log(formattedDate);
+
+        setChosenDate(formattedDate);
+    };
     const queryClient = useQueryClient();
     const handleFieldTypeChange = (event: SelectChangeEvent) => {
         setTimeSlot(event.target.value as string);
@@ -116,13 +124,13 @@ export default function OfflineBookingButton(FieldData: FieldDataType) {
     const slots = generateTimeSlots({ hours: FieldData.hourCount, startTime: FieldData.startTime });
 
 
-    const handleTabsChange = (
-        _event: React.MouseEvent<HTMLElement>,
-        newChosenDate: string,
-    ) => {
-        setTimeSlot("default")
-        setChosenDate(newChosenDate);
-    };
+    // const handleTabsChange = (
+    //     _event: React.MouseEvent<HTMLElement>,
+    //     newChosenDate: string,
+    // ) => {
+    //     setTimeSlot("default")
+    //     setChosenDate(newChosenDate);
+    // };
     const currentDate = new Date();
     const tomorrow = new Date(currentDate); // Create a copy of the current date
     const dayAfterTomorrow = new Date(currentDate); // Create a copy of the current date
@@ -145,36 +153,42 @@ export default function OfflineBookingButton(FieldData: FieldDataType) {
                     confirmText="Confirm"
                     cancelText="cancel"
                 >
-                    <ToggleButtonGroup
-                        fullWidth
-                        className='my-1'
-                        color="primary"
-                        value={ChosenDate}
-                        exclusive
-                        onChange={handleTabsChange}
-                        aria-label="Platform"
-                    >
-                        <ToggleButton className='!text-sm sm:!text-base' value={currentDate.toLocaleDateString('en-GB')}>Today <br />({currentDate.toLocaleDateString('en-GB')})</ToggleButton>
-                        <ToggleButton className='!text-sm sm:!text-base' value={tomorrow.toLocaleDateString('en-GB')}>Tomorrow <br />({tomorrow.toLocaleDateString('en-GB')})</ToggleButton>
-                        <ToggleButton className='!text-sm sm:!text-base' value={dayAfterTomorrow.toLocaleDateString('en-GB')}>Day after tomorrow <br />({dayAfterTomorrow.toLocaleDateString('en-GB')})</ToggleButton>
-                    </ToggleButtonGroup>
-                    <p>Pick session time</p>
-                    <Select
-                        required
-                        className="overflow-hidden"
-                        labelId="appointment"
-                        id="appointment"
-                        variant='outlined'
-                        fullWidth
-                        disabled={isLoading || isError || ChosenDate == ""}
-                        name="appointment"
-                        value={TimeSlot}
-                        label="appointment"
-                        onChange={handleFieldTypeChange}
-                    >
-                        <MenuItem value={'default'}>{isLoading ? "-- Loading --" : "-- Pick session time --"}</MenuItem>
-                        {slots}
-                    </Select>
+                    <Grid container className="items-center mt-5 my-3">
+                        <Grid size={4}>
+                            <TextField
+                                label="Select Date"
+                                type="date"
+                                value={ChosenDate.split("/").reverse().join("-")} // Convert back to YYYY-MM-DD for input
+                                onChange={handleDateChange}
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={{
+                                    min: new Date().toISOString().split("T")[0] // Sets min date to today
+                                }}
+                            />
+                        </Grid>
+                        <Grid size={8} className="relative">
+                            <p className='absolute bottom-14'>Pick session time</p>
+
+                            <Select
+                                required
+                                className="overflow-hidden"
+                                labelId="appointment"
+                                id="appointment"
+                                variant='outlined'
+                                fullWidth
+                                disabled={isLoading || isError || ChosenDate == ""}
+                                name="appointment"
+                                value={TimeSlot}
+                                label="appointment"
+                                onChange={handleFieldTypeChange}
+                            >
+
+
+                                <MenuItem value={'default'}>{isLoading ? "-- Loading --" : "-- Pick session time --"}</MenuItem>
+                                {slots}
+                            </Select>
+                        </Grid>
+                    </Grid>
                 </CustomDialog>
                 <button onClick={handleOpenDialog} className="px-4 py-2 w-full mt-5 rounded-xl hover:text-white bg-black dark:bg-white dark:text-black text-white font-bold text-2xl">Book offline</button>
             </>

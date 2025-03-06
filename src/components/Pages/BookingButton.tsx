@@ -1,7 +1,8 @@
 import React from 'react'
 import { useState } from 'react';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+// import ToggleButton from '@mui/material/ToggleButton';
+// import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import Grid from '@mui/material/Grid2';
 import CustomDialog from '../ui/ModalWithChildren';
 import axios, { AxiosError } from 'axios';
 import { Button, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
@@ -56,15 +57,17 @@ export default function BookingButton(FieldData: FieldDataType) {
             owner: FieldData.owner
         }
         console.log(phone);
-        
+
         try {
             const response = await axios.post(BaseURL + 'booking/' + userData?._id, body)
             await queryClient.refetchQueries({ queryKey: ['availability'] });
             console.log(response.data);
-
+            
             setPendingRequest(false)
             window.location.href = response.data.paymentUrl
         } catch (error) {
+            console.log(error);
+            
             const axiosError = error as AxiosError;
             toast.error(axiosError.response?.data as string, {
                 position: "top-center",
@@ -120,13 +123,20 @@ export default function BookingButton(FieldData: FieldDataType) {
     const slots = generateTimeSlots({ hours: FieldData.hourCount, startTime: FieldData.startTime });
 
 
-    const handleTabsChange = (
-        _event: React.MouseEvent<HTMLElement>,
-        newChosenDate: string,
-    ) => {
-        setTimeSlot("default")
-        setChosenDate(newChosenDate);
+    const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const rawDate = event.target.value; // YYYY-MM-DD format from input
+        const formattedDate = rawDate.split("-").reverse().join("/"); // Convert to DD/MM/YYYY
+        console.log(formattedDate);
+
+        setChosenDate(formattedDate);
     };
+    // const handleTabsChange = (
+    //     _event: React.MouseEvent<HTMLElement>,
+    //     newChosenDate: string,
+    // ) => {
+    //     setTimeSlot("default")
+    //     setChosenDate(newChosenDate);
+    // };
     const currentDate = new Date();
     const tomorrow = new Date(currentDate); // Create a copy of the current date
     const dayAfterTomorrow = new Date(currentDate); // Create a copy of the current date
@@ -142,14 +152,14 @@ export default function BookingButton(FieldData: FieldDataType) {
                     open={isDialogOpen}
                     maximizeWidth
                     onClose={handleCloseDialog}
-                    isDisabled={pendingRequest || TimeSlot == "default" || ChosenDate == "" || isLoading || isError || phoneError || phone==''}
+                    isDisabled={pendingRequest || TimeSlot == "default" || ChosenDate == "" || isLoading || isError || phoneError || phone == ''}
                     onConfirm={() => handleConfirmAction()}
                     title={"Book " + FieldData.title + " Field for " + FieldData.price + "egp? (pay 15 egp. now)"}
                     confirmColor='primary'
                     confirmText="Confirm"
                     cancelText="cancel"
                 >
-                    <ToggleButtonGroup
+                    {/* <ToggleButtonGroup
                         fullWidth
                         className='my-1'
                         color="primary"
@@ -161,32 +171,66 @@ export default function BookingButton(FieldData: FieldDataType) {
                         <ToggleButton className='!text-sm sm:!text-base' value={currentDate.toLocaleDateString('en-GB')}>Today <br />({currentDate.toLocaleDateString('en-GB')})</ToggleButton>
                         <ToggleButton className='!text-sm sm:!text-base' value={tomorrow.toLocaleDateString('en-GB')}>Tomorrow <br />({tomorrow.toLocaleDateString('en-GB')})</ToggleButton>
                         <ToggleButton className='!text-sm sm:!text-base' value={dayAfterTomorrow.toLocaleDateString('en-GB')}>Day after tomorrow <br />({dayAfterTomorrow.toLocaleDateString('en-GB')})</ToggleButton>
-                    </ToggleButtonGroup>
-                    <p>Pick session time</p>
-                    <Select
+                    </ToggleButtonGroup> */}
+                    {/* <Select
                         required
-                        className="overflow-hidden mb-4"
-                        labelId="appointment"
-                        id="appointment"
+                        className="overflow-hidden"
+                        labelId="start time"
+                        id="start time"
                         variant='outlined'
                         fullWidth
-                        disabled={isLoading || isError || ChosenDate == ""}
-                        name="appointment"
-                        value={TimeSlot}
-                        label="appointment"
-                        onChange={handleFieldTypeChange}
+                        name="start time"
+                        value={ChosenDate}
+                        label="start time"
+                        onChange={handleTabsChange}
                     >
-                        
+                        <MenuItem value={'default'}>select start time (required*)</MenuItem>
+                        <MenuItem value={'12 pm'}>12 pm</MenuItem>
+                    </Select> */}
+                    <Grid container className="items-center mt-5 my-3">
+                        <Grid size={4}>
+                            <TextField
+                                label="Select Date"
+                                type="date"
+                                value={ChosenDate.split("/").reverse().join("-")} // Convert back to YYYY-MM-DD for input
+                                onChange={handleDateChange}
+                                InputLabelProps={{ shrink: true }}
+                                inputProps={{
+                                    min: new Date().toISOString().split("T")[0] // Sets min date to today
+                                }}
+                            />
+                        </Grid>
+                        <Grid size={8} className="relative">
+                            <p className='absolute bottom-14'>Pick session time</p>
 
-                        <MenuItem value={'default'}>{isLoading ? "-- Loading --" : "-- Pick session time --"}</MenuItem>
-                        {slots}
-                    </Select>
+                            <Select
+                                required
+                                className="overflow-hidden"
+                                labelId="appointment"
+                                id="appointment"
+                                variant='outlined'
+                                fullWidth
+                                disabled={isLoading || isError || ChosenDate == ""}
+                                name="appointment"
+                                value={TimeSlot}
+                                label="appointment"
+                                onChange={handleFieldTypeChange}
+                            >
+
+
+                                <MenuItem value={'default'}>{isLoading ? "-- Loading --" : "-- Pick session time --"}</MenuItem>
+                                {slots}
+                            </Select>
+                        </Grid>
+                    </Grid>
+
+
                     <TextField
-                            type='tel'
-                            error={phoneError}
-                            value={phone}
-                            onChange={handlephoneChange}
-                            helperText={phoneError ? "Enter a valid phone number (11 digits and starts with 01)" : ""} inputProps={{ min: 0, max: 24 }} required fullWidth id="clientPhone" name='clientPhone' label="whatsapp number" variant="outlined" />
+                        type='tel'
+                        error={phoneError}
+                        value={phone}
+                        onChange={handlephoneChange}
+                        helperText={phoneError ? "Enter a valid phone number (11 digits and starts with 01)" : ""} inputProps={{ min: 0, max: 24 }} required fullWidth id="clientPhone" name='clientPhone' label="whatsapp number" variant="outlined" />
                 </CustomDialog>
                 <button onClick={handleOpenDialog} className="px-4 py-2 w-full mt-5 rounded-xl hover:text-white bg-black dark:bg-white dark:text-black text-white font-bold text-2xl">Book 15 Egp.</button>
             </>
