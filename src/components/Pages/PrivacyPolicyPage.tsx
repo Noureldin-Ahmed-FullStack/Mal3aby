@@ -215,6 +215,12 @@ export default function PrivacyPolicyPage() {
                 By email: <a href="mailto:mohamedmgly7@gmail.com">mohamedmgly7@gmail.com</a>
                 </li>
                 <li>
+                By Phone/WhatsApp: <a href="tel:+201120930292">+201120930292</a>
+                </li>
+                <li>
+                Address: Cairo, Maadi city, Egypt
+                </li>
+                <li>
                     <p>By visiting this page on our website: <a href="https://captain-masr.vercel.app/customer-service" rel="external nofollow noopener" target="_blank">https://captain-masr.vercel.app/customer-service</a></p>
                 </li>
             </ul>
