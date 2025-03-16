@@ -32,6 +32,7 @@ export default function AddPost() {
     const [ContentState, setContentState] = useState("");
     const contenteRef = useRef<HTMLInputElement | null>(null);
     let isNews = location.pathname == "/social" ? false : true
+    console.log(location.pathname, isNews);
 
     const handleFileChange = (files: File[]) => {
         setImages(files)
@@ -102,7 +103,7 @@ export default function AddPost() {
                 if (contenteRef.current) {
                     contenteRef.current.value = '';
                 }
-                queryClient.refetchQueries({ queryKey: ['newsPosts'] });
+                queryClient.refetchQueries({ queryKey: [isNews ? 'newsPosts' : 'SocialPosts'] });
                 setPendingRequest(false)
                 handleClose();
 
@@ -144,7 +145,7 @@ export default function AddPost() {
                         const formData = new FormData(event.currentTarget);
                         const formJson = Object.fromEntries((formData as any).entries());
                         formData.append('content', formJson.Content_textarea)
-                        formData.append('isNews', isNews.toString())
+                        formData.append('isNews', isNews ? 'true' : 'false')
                         Array.from(Images).forEach((image) => {
                             formData.append('Images', image);  // Append each image under the 'Images' key
                         });
