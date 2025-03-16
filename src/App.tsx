@@ -11,6 +11,7 @@ import { Box, createTheme, ThemeProvider } from "@mui/material";
 import { useThemeStore } from "./context/ThemeContext";
 import { useFavs } from "./hooks/FetchFields";
 import { useTranslation } from "react-i18next";
+import Footer from "./components/Pages/Footer";
 const detectDevice = () => {
   const userAgent = navigator.userAgent.toLowerCase();
   if (/android/.test(userAgent)) {
@@ -100,6 +101,8 @@ function App() {
         <Outlet />
         {currentDevice != "Other" && <TabLayout />}
         {/* <OpenIconSpeedDial /> */}
+        
+        {currentDevice == "Other" && <Footer />}
       </ThemeProvider>
 
     </Box>

@@ -29,6 +29,7 @@ import LoginFirstPage from './components/Pages/LoginFirstPage.tsx'
 import ManageAllUsersPage from './components/Pages/ManageAllUsersPage.tsx'
 import NewsPage from './components/Pages/NewsPage.tsx'
 import CustomerServicePage from './components/Pages/CustomerServicePage.tsx'
+import PrivacyPolicyPage from './components/Pages/PrivacyPolicyPage.tsx'
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
 
@@ -54,6 +55,7 @@ const router = createBrowserRouter([
       { path: "/favourites", element: <Favouritespage className='my-28'/> },
       { path: "/pool-billiard", element: <FieldsPage /> },
       { path: "/swimming-pool", element: <FieldsPage /> },
+      { path: "/Privacy-Policy", element: <PrivacyPolicyPage /> },
       { path: "/customer-service", element: <CustomerServicePage /> },
       { path: "/news", element: <NewsPage /> },
       { path: "/Profile", element: <><SignedIn><ProfilePage /></SignedIn><SignedOut><LoginFirstPage /></SignedOut></>},

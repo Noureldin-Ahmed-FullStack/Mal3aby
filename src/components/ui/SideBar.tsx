@@ -7,9 +7,12 @@ import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
+import MessageIcon from '@mui/icons-material/Message';
 import TranslateIcon from '@mui/icons-material/Translate';
 import ListItemButton from '@mui/material/ListItemButton';
+import GavelIcon from '@mui/icons-material/Gavel';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import ShieldIcon from '@mui/icons-material/Shield';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import ListItemText from '@mui/material/ListItemText';
@@ -97,6 +100,30 @@ export default function SideBar() {
                             <NewspaperIcon />
                         </ListItemIcon>
                         <ListItemText primary={sidebarText[4]} />
+                    </ListItemButton>
+                </ListItem>
+                <ListItem className='text-inherit' component={Link} to="/privacy-policy#contactus" disablePadding>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <MessageIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={'contactus'} />
+                    </ListItemButton>
+                </ListItem>
+                <ListItem className='text-inherit' component={Link} to="/privacy-policy" disablePadding>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <ShieldIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={'Privacy policy'} />
+                    </ListItemButton>
+                </ListItem>
+                <ListItem className='text-inherit' component={Link} to="/privacy-policy#tos" disablePadding>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <GavelIcon />
+                        </ListItemIcon>
+                        <ListItemText primary={'Terms of service'} />
                     </ListItemButton>
                 </ListItem>
             </List>
